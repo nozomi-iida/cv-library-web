@@ -1,5 +1,4 @@
-import React, { useState,useCallback } from 'react';
-import Dropzone from "react-dropzone"
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -56,11 +55,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const [error,setError]=useState("")
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
-    {data.confirmpassword !==data.password && setError("passwordと一致しません")
-    
-    }
+    data.confirmpassword !==data.password && setError("passwordと一致しません")
     console.log(data);
     }
   const classes = useStyles();
