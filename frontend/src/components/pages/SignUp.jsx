@@ -1,5 +1,5 @@
 import React, { useState,useCallback } from 'react';
-import {useDropzone} from "react-dropzone"
+import Dropzone from "react-dropzone"
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from "react-hook-form";
+import Icon from "./Icon"
 
 
 function Copyright() {
@@ -31,32 +32,7 @@ function Copyright() {
 
 
 
-function MyDropzone() {
-  const onDrop = useCallback((acceptedFiles) => {
-    
-    acceptedFiles.forEach((file) => {
-      const reader = new FileReader();
 
-      reader.onabort = () => console.log("file reading was aborted");
-      reader.onerror = () => console.log("file reading has failed");
-      reader.onload = () => {
-        // Do whatever you want with the file contents
-        const binaryStr = reader.result;
-        console.log(binaryStr);
-        
-      };
-      reader.readAsArrayBuffer(file);
-    });
-  }, []);
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
-  return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      <p>Drag 'n' drop some files here, or click to select files</p>
-    </div>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -88,8 +64,6 @@ export default function SignUp() {
     console.log(data);
     }
   const classes = useStyles();
-
-  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -125,7 +99,6 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 inputRef={register({ required: true })}
-       
               />
               {errors.email && <span>This field is required</span>}
             </Grid>
@@ -139,7 +112,6 @@ export default function SignUp() {
                 id="password"
                 autoComplete="current-password"
                 inputRef={register({ required: true })}
-
               />
               {errors.password && <span>This field is required</span>}
             </Grid>
@@ -153,24 +125,11 @@ export default function SignUp() {
                 id="confirmpassword"
                 autoComplete="confirmpassword"
                 inputRef={register({ required: true })}
-
               />
-                <span>{error}</span>
+              <span>{error}</span>
               {errors.confirmpassword && <span>This field is required</span>}
             </Grid>
-              
-            <MyDropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
-              {({ getRootProps, getInputProps }) => (
-                <section>
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <p>
-                      Drag 'n' drop some files here, or click to select files
-                    </p>
-                  </div>
-                </section>
-              )}
-            </MyDropzone>
+            <Icon/>
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
