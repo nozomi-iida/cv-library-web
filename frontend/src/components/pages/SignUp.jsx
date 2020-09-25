@@ -1,49 +1,44 @@
-import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import React, { useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import Icon from "../templates/Icon";
-
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
-
-
-
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -52,12 +47,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  const [error,setError]=useState("")
+  const [error, setError] = useState("");
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
-    data.confirmpassword !==data.password && setError("passwordと一致しません")
+    data.confirmpassword !== data.password &&
+      setError("passwordと一致しません");
     console.log(data);
-    }
+  };
   const classes = useStyles();
 
   return (
@@ -83,7 +79,9 @@ export default function SignUp() {
                 autoFocus
                 inputRef={register({ required: true })}
               />
-              {errors.email && <span style={{color:"red"}}>名前を入力してください</span>}
+              {errors.email && (
+                <span style={{ color: "red" }}>名前を入力してください</span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -95,7 +93,11 @@ export default function SignUp() {
                 autoComplete="email"
                 inputRef={register({ required: true })}
               />
-              {errors.email && <span style={{color:"red"}}>メールアドレスを入力してください</span>}
+              {errors.email && (
+                <span style={{ color: "red" }}>
+                  メールアドレスを入力してください
+                </span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -108,7 +110,11 @@ export default function SignUp() {
                 autoComplete="current-password"
                 inputRef={register({ required: true })}
               />
-              {errors.email && <span style={{color:"red"}}>パスワードを入力してください</span>}
+              {errors.email && (
+                <span style={{ color: "red" }}>
+                  パスワードを入力してください
+                </span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -122,9 +128,13 @@ export default function SignUp() {
                 inputRef={register({ required: true })}
               />
               <span>{error}</span>
-              {errors.email && <span style={{color:"red"}}>パスワード(確認用)を入力してください</span>}
+              {errors.email && (
+                <span style={{ color: "red" }}>
+                  パスワード(確認用)を入力してください
+                </span>
+              )}
             </Grid>
-            <Icon/>
+            <Icon />
           </Grid>
 
           <Button

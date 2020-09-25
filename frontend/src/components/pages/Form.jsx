@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  font:{
-    color:"red"
-  }
+  font: {
+    color: "red",
+  },
 }));
 
 export default function SignIn() {
@@ -67,7 +67,7 @@ export default function SignIn() {
             autoFocus
             inputRef={register({ required: true })}
           />
-          
+
           {errors.title && (
             <span className={classes.font}>書き忘れています</span>
           )}
