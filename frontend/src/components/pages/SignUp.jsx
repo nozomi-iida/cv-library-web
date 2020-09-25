@@ -1,5 +1,4 @@
-import React, { useState,useCallback } from 'react';
-import Dropzone from "react-dropzone"
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -56,11 +55,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const [error,setError]=useState("")
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
-    {data.confirmpassword !==data.password && setError("passwordと一致しません")
-    
-    }
+    data.confirmpassword !==data.password && setError("passwordと一致しません")
     console.log(data);
     }
   const classes = useStyles();
@@ -88,7 +85,7 @@ export default function SignUp() {
                 autoFocus
                 inputRef={register({ required: true })}
               />
-              {errors.Name && <span>This field is required</span>}
+              {errors.email && <span style={{color:"red"}}>名前を入力してください</span>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -100,7 +97,7 @@ export default function SignUp() {
                 autoComplete="email"
                 inputRef={register({ required: true })}
               />
-              {errors.email && <span>This field is required</span>}
+              {errors.email && <span style={{color:"red"}}>メールアドレスを入力してください</span>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -113,7 +110,7 @@ export default function SignUp() {
                 autoComplete="current-password"
                 inputRef={register({ required: true })}
               />
-              {errors.password && <span>This field is required</span>}
+              {errors.email && <span style={{color:"red"}}>パスワードを入力してください</span>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -127,7 +124,7 @@ export default function SignUp() {
                 inputRef={register({ required: true })}
               />
               <span>{error}</span>
-              {errors.confirmpassword && <span>This field is required</span>}
+              {errors.email && <span style={{color:"red"}}>パスワード(確認用)を入力してください</span>}
             </Grid>
             <Icon/>
           </Grid>
