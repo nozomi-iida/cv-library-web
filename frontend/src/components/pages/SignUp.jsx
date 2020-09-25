@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState,useCallback } from 'react';
+import Dropzone from "react-dropzone"
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +13,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useForm } from "react-hook-form";
+import Icon from "./Icon"
+
 
 function Copyright() {
   return (
@@ -25,6 +29,10 @@ function Copyright() {
     </Typography>
   );
 }
+
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,6 +55,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
+  const [error,setError]=useState("")
+  const { register, handleSubmit, watch, errors } = useForm();
+  const onSubmit = (data) => {
+    {data.confirmpassword !==data.password && setError("passwordと一致しません")
+    
+    }
+    console.log(data);
+    }
   const classes = useStyles();
 
   return (
@@ -59,61 +75,63 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                autoComplete="name"
+                name="Name"
                 variant="outlined"
-                required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="Name"
+                label="Name"
                 autoFocus
+                inputRef={register({ required: true })}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
+              {errors.Name && <span>This field is required</span>}
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                inputRef={register({ required: true })}
               />
+              {errors.email && <span>This field is required</span>}
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                inputRef={register({ required: true })}
               />
+              {errors.password && <span>This field is required</span>}
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="confirmpassword"
+                label="confirmPassword"
+                type="password"
+                id="confirmpassword"
+                autoComplete="confirmpassword"
+                inputRef={register({ required: true })}
               />
+              <span>{error}</span>
+              {errors.confirmpassword && <span>This field is required</span>}
             </Grid>
+            <Icon/>
           </Grid>
+
           <Button
             type="submit"
             fullWidth
