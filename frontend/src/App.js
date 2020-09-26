@@ -1,10 +1,13 @@
 import React from 'react';
 import SignUp from './components/pages/SignUp';
-import Bar from "./components/templates/Bar"
+import Header from "./components/templates/Header"
+import Footer from "./components/templates/Footer"
 function App() {
   return (
     <div className="App">
-      <Bar/>
+      <Header/>
+      <SignUp/>
+      <Footer/>
     </div>
   );
 }
