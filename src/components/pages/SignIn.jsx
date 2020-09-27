@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const {register,handleSubmit,errors}=useForm();
+  const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -81,7 +81,11 @@ export default function SignIn() {
             autoFocus
             inputRef={register({ required: true })}
           />
-          {errors.email && <span style={{color:"red"}}>メールアドレスを入力してください</span>}
+          {errors.email && (
+            <span style={{ color: "red" }}>
+              メールアドレスを入力してください
+            </span>
+          )}
           <TextField
             variant="outlined"
             margin="normal"
@@ -94,7 +98,12 @@ export default function SignIn() {
             autoComplete="current-password"
             inputRef={register({ required: true })}
           />
-            {errors.password && <><span style={{color:"red"}}>パスワードを入力してください</span><br></br></>}
+          {errors.password && (
+            <>
+              <span style={{ color: "red" }}>パスワードを入力してください</span>
+              <br></br>
+            </>
+          )}
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
