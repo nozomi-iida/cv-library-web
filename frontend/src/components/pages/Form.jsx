@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function Form() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
