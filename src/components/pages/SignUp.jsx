@@ -11,7 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
-import Icon from "../templates/Icon";
+import IconModal from "../templates/IconModal"
+
 
 function Copyright() {
   return (
@@ -66,6 +67,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <IconModal/>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -134,7 +136,6 @@ export default function SignUp() {
                 </span>
               )}
             </Grid>
-            <Icon />
           </Grid>
 
           <Button

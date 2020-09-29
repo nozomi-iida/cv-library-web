@@ -28,7 +28,7 @@ const Footer = () => {
       <BottomNavigationAction label="読書中" icon={<ImportContactsIcon />} />
       <BottomNavigationAction
         label="読了"
-        icon={<i style={{ fontSize: 20 }} class="fas fa-book"></i>}
+        icon={<i style={{ fontSize: 20 }} className="fas fa-book"></i>}
       />
     </BottomNavigation>
   );

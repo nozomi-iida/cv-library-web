@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import AvatarEditor from "react-avatar-editor";
 import Dropzone from "react-dropzone";
-import Slider from "@material-ui/core/Slider";
-import NoImage from "../../images/noImage.jpeg";
+import { Button } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles";
 
-const Icon = () => {
-  const [state, setState] = useState(NoImage);
-  const [scale, setScale] = useState("");
 
-  const handleDrop = (dropped) => {
-    setState(dropped[0]);
-  };
-  const valuetext = (value) => {
-    return setScale(value);
-  };
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+}));
+
+
+const Icon = ({image,handleDrop,addImage,handleClose}) => {
+   const classes = useStyles();
+  const Change=(file)=>{
+    addImage(file)
+  }
+
 
   return (
     <>
@@ -26,32 +32,39 @@ const Icon = () => {
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>
             <AvatarEditor
-              scale={scale}
               width={150}
               height={150}
               borderRadius={75}
-              image={state}
+              image={image}
             />
             <input {...getInputProps()} />
           </div>
         )}
       </Dropzone>
-      <div style={{ width: 150, marginTop: 75, marginLeft: 30 }}>
-        <Slider
-          defaultValue={1}
-          getAriaValueText={valuetext}
-          min={1}
-          max={10}
-          valueLabelDisplay="auto"
+      <div className={classes.root}>
+        <input
+          accept="image/*"
+          style={{ display: "none" }}
+          className={classes.input}
+          id="contained-button-file"
+          multiple
+          type="file"
+          accept="Image/*"
+          onChange={(e) => Change(e.target.files[0])}
         />
+        <label
+          style={{ justifyContent: "center", display: "flex" }}
+          htmlFor="contained-button-file"
+        >
+          <Button variant="contained" color="primary" component="span">
+            ファイル
+          </Button>             
+          <Button style={{marginLeft:15}} color="primary" variant="contained" onClick={handleClose}>
+            決定
+          </Button>
+        
+        </label>
       </div>
-      <input
-        type="file"
-        accept="Image/*"
-        onChange={(e) => {
-          setState(e.target.files[0]);
-        }}
-      />
     </>
   );
 };
