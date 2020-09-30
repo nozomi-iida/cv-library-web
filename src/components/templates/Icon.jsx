@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import AvatarEditor from "react-avatar-editor";
 import Dropzone from "react-dropzone";
-import { Button } from "@material-ui/core";
+import { Button } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,19 +13,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Icon = ({ image, handleDrop, addImage, handleClose }) => {
-  const classes = useStyles();
-  const [editor, setImg] = useState(null);
-  const Change = (file) => {
-    addImage(file);
-  };
-  const aaa = () => {
-    const canvas = editor.getImage().toDataURL();
-    fetch(canvas)
-      .then((res) => res.blob())
-      .then((blob) => handleDrop([window.URL.createObjectURL(blob)]));
-    handleClose();
-  };
+
+const Icon = ({image,handleDrop,addImage,handleClose}) => {
+   const classes = useStyles();
+  const Change=(file)=>{
+    addImage(file)
+  }
+
 
   return (
     <>
@@ -41,10 +36,6 @@ const Icon = ({ image, handleDrop, addImage, handleClose }) => {
               height={150}
               borderRadius={75}
               image={image}
-              ref={(editor) => {
-                console.log(editor);
-                setImg(editor);
-              }}
             />
             <input {...getInputProps()} />
           </div>
@@ -67,15 +58,11 @@ const Icon = ({ image, handleDrop, addImage, handleClose }) => {
         >
           <Button variant="contained" color="primary" component="span">
             ファイル
-          </Button>
-          <Button
-            style={{ marginLeft: 15 }}
-            color="primary"
-            variant="contained"
-            onClick={aaa}
-          >
+          </Button>             
+          <Button style={{marginLeft:15}} color="primary" variant="contained" onClick={handleClose}>
             決定
           </Button>
+        
         </label>
       </div>
     </>

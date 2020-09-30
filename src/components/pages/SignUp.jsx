@@ -11,9 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
-import IconModal from "../templates/IconModal";
-import firebase from "../../firebase/firebase";
-import NoImage from "../../images/noImage.jpeg";
+import IconModal from "../templates/IconModal"
+
 
 function Copyright() {
   return (
@@ -49,27 +48,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  const [image, setImage] = React.useState(NoImage);
   const [error, setError] = useState("");
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
     data.confirmpassword !== data.password &&
       setError("passwordと一致しません");
     console.log(data);
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(data.email, data.password)
-      .then(({ user }) => {
-        user.updateProfile({
-          displayName: data.Name,
-          email: data.email,
-          photoURL: image,
-        });
-      })
-
-      .catch((err) => {
-        console.log(err);
-      });
   };
   const classes = useStyles();
 
@@ -83,7 +67,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <IconModal setImage={setImage} image={image} />
+        <IconModal/>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>

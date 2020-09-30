@@ -16,7 +16,14 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
+
+
 import Avatar from "@material-ui/core/Avatar";
+
+
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,10 +35,10 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  image_round: {
-    borderRadius: "50%",
-    width: 50,
-    height: 50,
+  image_round:{
+    borderRadius:"50%",
+    width:50,
+    height:50,
   },
 }));
 
@@ -76,12 +83,17 @@ export default function ButtonAppBar() {
             <ListItemText primary="aaaa@gmail.com" />
           </div>
         </ListItem>
-        <ListItem style={{ backgroundColor: "#4fc3f7", height: 40 }}>
+        <ListItem style={{ backgroundColor: "#4fc3f7",height:40 }}>
           <IconButton>ログアウト</IconButton>
         </ListItem>
       </List>
     </div>
   );
+
+
+
+
+
 
   return (
     <div className={classes.root}>
@@ -112,6 +124,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             CV Library
           </Typography>
+         
         </Toolbar>
       </AppBar>
     </div>
