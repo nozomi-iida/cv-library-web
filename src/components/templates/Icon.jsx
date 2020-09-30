@@ -1,9 +1,8 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import AvatarEditor from "react-avatar-editor";
 import Dropzone from "react-dropzone";
-import { Button } from "@material-ui/core"
+import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,22 +12,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-const Icon = ({image,handleDrop,addImage,handleClose}) => {
-   const classes = useStyles();
-   const [editor, setImg] = useState(null);
-  const Change=(file)=>{
-    addImage(file)
-}
-const aaa = () => {
-  const canvas = editor.getImage().toDataURL();
-  fetch(canvas)
-    .then((res) => res.blob())
-    .then((blob) => handleDrop([window.URL.createObjectURL(blob)]));
-  handleClose();
-};
-
-
+const Icon = ({ image, handleDrop, addImage, handleClose }) => {
+  const classes = useStyles();
+  const [editor, setImg] = useState(null);
+  const Change = (file) => {
+    addImage(file);
+  };
+  const aaa = () => {
+    const canvas = editor.getImage().toDataURL();
+    fetch(canvas)
+      .then((res) => res.blob())
+      .then((blob) => handleDrop([window.URL.createObjectURL(blob)]));
+    handleClose();
+  };
 
   return (
     <>
