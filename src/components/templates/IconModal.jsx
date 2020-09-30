@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Icon from "./Icon"
-import NoImage from "../../images/noImage.jpeg";
+
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -20,10 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function IconModal() {
+export default function IconModal({setImage,image}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [image, setImage] = React.useState(NoImage);
+  
+  
+
   const createObjectURL =
     (window.URL || window.webkitURL).createObjectURL || window.createObjectURL;
 
@@ -45,6 +47,7 @@ export default function IconModal() {
   const handleDrop = (dropped) => {
     setImage(dropped[0]);
   };
+
 
   return (
     <div>

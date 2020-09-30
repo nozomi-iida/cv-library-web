@@ -18,7 +18,9 @@ const Icon = ({image,handleDrop,addImage,handleClose}) => {
    const classes = useStyles();
   const Change=(file)=>{
     addImage(file)
-  }
+}
+
+
 
 
   return (
@@ -32,6 +34,7 @@ const Icon = ({image,handleDrop,addImage,handleClose}) => {
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>
             <AvatarEditor
+              id="Editor"
               width={150}
               height={150}
               borderRadius={75}
@@ -62,7 +65,6 @@ const Icon = ({image,handleDrop,addImage,handleClose}) => {
           <Button style={{marginLeft:15}} color="primary" variant="contained" onClick={handleClose}>
             決定
           </Button>
-        
         </label>
       </div>
     </>
