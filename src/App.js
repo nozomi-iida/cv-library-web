@@ -1,15 +1,23 @@
-import React from 'react';
-import SignUp from './components/pages/SignUp';
-import Header from "./components/templates/Header"
-import Footer from "./components/templates/Footer"
-import Form from "./components/pages/Form"
-import SignIn from './components/pages/SignIn';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import SignUp from "./components/pages/SignUp";
+import Header from "./components/templates/Header";
+import Footer from "./components/templates/Footer";
+import Form from "./components/pages/Form";
+import SignIn from "./components/pages/SignIn";
+import BookList from "./components/pages/BookList";
+import BookDetail from "./components/pages/BookDetail";
 function App() {
   return (
     <div className="App">
-      <Header/>
-      <SignUp/>
-      <Footer/>
+      <Header />
+      <Router>
+        <Switch>
+          <Route exact path="/" component={BookList} />
+          <Route exact path="/book" component={BookDetail} />
+        </Switch>
+      </Router>
+      <Footer />
     </div>
   );
 }
