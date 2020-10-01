@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function IconModal({ setImage, image }) {
+export default function IconModal({ setImage, image, addFile }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -35,13 +35,16 @@ export default function IconModal({ setImage, image }) {
   };
 
   const addImage = (file) => {
-    const URL = createObjectURL(file);
-    setImage(URL);
-    console.log(URL);
+
+    setImage(file);
+    console.log(file);
   };
+
 
   const handleDrop = (dropped) => {
     setImage(dropped[0]);
+    var newfile = new File([dropped[0]], "./myfile.jpg");
+    addFile(newfile)
   };
 
   return (
@@ -71,6 +74,7 @@ export default function IconModal({ setImage, image }) {
               addImage={addImage}
               handleClose={handleClose}
               handleDrop={handleDrop}
+              addFile={addFile}
             />
           </div>
         </Fade>

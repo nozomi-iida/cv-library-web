@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import IconModal from "../templates/IconModal";
 import firebase from "../../firebase/firebase";
 import NoImage from "../../images/noImage.jpeg";
+import  {fireStorage}  from "../../firebase/firebase";
 
 function Copyright() {
   return (
@@ -49,7 +50,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
+  const [file,setFile]=React.useState(NoImage)
   const [image, setImage] = React.useState(NoImage);
+  const [userImageURL,setUserImageURL]=React.useState("")
   const [error, setError] = useState("");
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
@@ -60,17 +63,35 @@ export default function SignUp() {
       .auth()
       .createUserWithEmailAndPassword(data.email, data.password)
       .then(({ user }) => {
+        fireStorage
+          .ref()
+          .child(user.uid)
+          .put(file)
+          .then((snapshot) => {
+            const url = snapshot.ref.getDownloadURL();
+            console.log(url); // ダウンロードURL
+            setUserImageURL(url)
+          })
+          .catch((er) => {
+            console.log(er);
+            // error
+          });
         user.updateProfile({
           displayName: data.Name,
           email: data.email,
-          photoURL: image,
+          photoURL:userImageURL,
         });
       })
-
       .catch((err) => {
         console.log(err);
       });
+      
+      console.log(image);
+      console.log(file)
   };
+  const addFile=(file)=>{
+    setFile(file)
+  }
   const classes = useStyles();
 
   return (
@@ -83,7 +104,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <IconModal setImage={setImage} image={image} />
+        <IconModal addFile={addFile} setImage={setImage} image={image} />
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>

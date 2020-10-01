@@ -12,11 +12,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Icon = ({ image, handleDrop, addImage, handleClose }) => {
+const Icon = ({ image, handleDrop, addImage, handleClose,addFile }) => {
   const classes = useStyles();
   const [editor, setImg] = useState(null);
   const Change = (file) => {
     addImage(file);
+    addFile(file)
   };
   const aaa = () => {
     const canvas = editor.getImage().toDataURL();
