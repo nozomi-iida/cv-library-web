@@ -15,6 +15,9 @@ function App() {
         <Switch>
           <Route exact path="/" component={BookList} />
           <Route exact path="/book" component={BookDetail} />
+          <Route exact path="/add" component={Form} />
+          <Route exact path="/signIn" component={SignIn} />
+          <Route exact path="/signUp" component={SignUp} />
         </Switch>
       </Router>
       <Footer />
