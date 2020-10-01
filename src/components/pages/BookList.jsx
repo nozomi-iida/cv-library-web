@@ -1,10 +1,9 @@
-import React, { Children } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import { Class } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,13 +13,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     marginTop: 10,
   },
-  // list: {
-  //   // maxWidth: 400,
-  //   display: "flex",
-  //   whiteSpace: "nowrap",
-  //   overflow: "hidden",
-  //   textOverflow: "ellipsis",
-  // },
+
   primary: {
     whiteSpace: "nowrap",
     overflow: "hidden",
@@ -28,39 +21,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// function ListItemLink(props) {
-//   return <ListItem button component="a" {...props} />;
-// }
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
 export default function SimpleList() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <List component="nav" aria-label="main mailbox folders">
-        <ListItem button>
+      <List component="nav">
+        <ListItemLink href="/book">
           <ListItemText
             className={classes.list}
             primary="「MIU404」公式メモリアルブック Amazon限定表紙版"
             classes={{ primary: classes.primary }}
           />
-        </ListItem>
+        </ListItemLink>
         <Divider />
-        <ListItem button>
+        <ListItemLink href="/book">
           <ListItemText
             className={classes.list}
             primary="「気がつきすぎて疲れる」が驚くほどなくなる 「繊細さん」の本"
             classes={{ primary: classes.primary }}
           />
-        </ListItem>
+        </ListItemLink>
         <Divider />
-        <ListItem button>
+        <ListItemLink href="/book">
           <ListItemText
             className={classes.list}
             primary="半沢直樹 アルルカンと道化師"
             classes={{ primary: classes.primary }}
           />
-        </ListItem>
+        </ListItemLink>
         <Divider />
       </List>
     </div>
