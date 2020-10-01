@@ -63,19 +63,21 @@ export default function SignUp() {
       .auth()
       .createUserWithEmailAndPassword(data.email, data.password)
       .then(({ user }) => {
+        if(file!==NoImage){
         fireStorage
-          .ref()
-          .child(user.uid)
-          .put(file)
-          .then((snapshot) => {
-            const url = snapshot.ref.getDownloadURL();
-            console.log(url); // ダウンロードURL
-            setUserImageURL(url)
-          })
-          .catch((er) => {
-            console.log(er);
-            // error
-          });
+        .ref()
+        .child(user.uid)
+        .put(file)
+        .then((snapshot) => {
+          const url = snapshot.ref.getDownloadURL();
+          console.log(url); // ダウンロードURL
+          setUserImageURL(url)
+        })
+        .catch((er) => {
+          console.log(er);
+          // error
+        });
+      }
         user.updateProfile({
           displayName: data.Name,
           email: data.email,
@@ -86,8 +88,7 @@ export default function SignUp() {
         console.log(err);
       });
       
-      console.log(image);
-      console.log(file)
+
   };
   const addFile=(file)=>{
     setFile(file)
@@ -101,6 +102,11 @@ export default function SignUp() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
+        <button onClick={()=>{
+          console.log(file)
+          console.log(NoImage)
+        }
+        }>push</button>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
