@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     marginTop: 10,
     justifyContent: "center",
+    paddingBottom: 60,
   },
   back: {
     padding: 0,
@@ -75,7 +76,7 @@ export default function Books({ history }) {
           border="4"
         />
         <div className={classes.description}>
-          <h3 className={classes.text}>React.js&Next.js</h3>
+          <h4 className={classes.text}>React.js&Next.js</h4>
           <div className={classes.info}>
             <p>作成者：イイダノゾミ</p>
             <p className={classes.text}>作成日：2020/9/31</p>
