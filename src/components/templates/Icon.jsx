@@ -43,7 +43,6 @@ const Icon = ({ image, handleDrop, addImage, handleClose,addFile }) => {
               borderRadius={75}
               image={image}
               ref={(editor) => {
-                console.log(editor);
                 setImg(editor);
               }}
             />

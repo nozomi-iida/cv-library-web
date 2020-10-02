@@ -64,7 +64,7 @@ export default function ButtonAppBar() {
     >
       <List>
         <ListItem>
-          <Avatar src="../../images/noImage.jpeg" style={{ marginRight: 10 }} />
+          <Avatar style={{ marginRight: 10 }} />
           <div
             style={{
               display: "flex",
