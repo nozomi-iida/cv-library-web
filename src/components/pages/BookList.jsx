@@ -4,6 +4,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,14 +22,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-export default function SimpleList() {
+export default function SimpleList({history}) {
   const classes = useStyles();
+  const goform = () => {
+    history.push("/add");
+  };
 
   return (
+    <>
     <div className={classes.root}>
       <List component="nav">
         <ListItemLink href="/book">
@@ -57,5 +63,12 @@ export default function SimpleList() {
         <Divider />
       </List>
     </div>
+  <IconButton
+    className="fa fa-plus-circle"
+    color="primary"
+    style={{ fontSize: 30 , position:"fixed" , bottom:100, right:700}}
+    onClick={goform}
+/>
+  </>
   );
 }
