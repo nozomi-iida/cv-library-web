@@ -18,6 +18,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import Avatar from "@material-ui/core/Avatar";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -77,7 +78,7 @@ export default function ButtonAppBar() {
           </div>
         </ListItem>
         <ListItem style={{ backgroundColor: "#4fc3f7", height: 40 }}>
-          <IconButton>ログアウト</IconButton>
+          <IconButton >ログアウト</IconButton>
         </ListItem>
       </List>
     </div>
