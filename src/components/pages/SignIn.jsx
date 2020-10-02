@@ -3,7 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
@@ -12,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
+import firebase from "../../firebase/firebase"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,7 +37,10 @@ export default function SignIn() {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
+    firebase.auth().signInWithEmailAndPassword(data.email,data.password)
+    .catch(err=>{
+      console.log(err)
+    })
   };
 
   return (
@@ -90,16 +93,13 @@ export default function SignIn() {
               <br></br>
             </>
           )}
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+ 
           >
             Sign In
           </Button>
