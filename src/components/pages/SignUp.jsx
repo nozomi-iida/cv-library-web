@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp({history}) {
   const [file, setFile] = React.useState(null);
   const [image, setImage] = React.useState('');
   const [error, setError] = useState('');
@@ -114,7 +114,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <span style={{color:"red"}}>{error}</span>
+        <span style={{ color: "red" }}>{error}</span>
         <IconModal addFile={addFile} setImage={setImage} image={image} />
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
@@ -197,9 +197,9 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Button color="primary" onClick={()=>history.push("/signIn")}>
                 アカウントをすでにお持ちですか？
-              </Link>
+              </Button>
             </Grid>
           </Grid>
         </form>
