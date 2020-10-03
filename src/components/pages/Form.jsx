@@ -2,11 +2,12 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
+// import Link from "@material-ui/core/Link";
+// import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
+import firebase from "../../firebase/firebase";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -14,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    paddingBottom: 70,
   },
   avatar: {
     margin: theme.spacing(1),
@@ -31,11 +33,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Form() {
+export default function Form({ history }) {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
+
   const onSubmit = (data) => {
-    console.log(data);
+    firebase.firestore().collection("books").add({
+      username: "",
+      reviews: 0,
+      status: "読みたい本",
+      impression: "",
+      title: data.title,
+      url: data.url,
+      details: data.details,
+      reason: data.reason,
+    });
+    history.push("/");
   };
 
   return (
@@ -69,7 +82,7 @@ export default function Form() {
           />
 
           {errors.title && (
-            <span className={classes.font}>書き忘れています</span>
+            <span className={classes.font}>タイトルを入力してください</span>
           )}
           <h3
             style={{
@@ -90,7 +103,9 @@ export default function Form() {
             id="url"
             inputRef={register({ required: true })}
           />
-          {errors.url && <span className={classes.font}>書き忘れています</span>}
+          {errors.url && (
+            <span className={classes.font}>AmaszonのURLを入力してください</span>
+          )}
           <h3
             style={{
               width: "100%",
@@ -113,7 +128,9 @@ export default function Form() {
             inputRef={register({ required: true })}
           />
           {errors.details && (
-            <span className={classes.font}>書き忘れています</span>
+            <span className={classes.font}>
+              本の簡単な詳細を入力してください
+            </span>
           )}
           <h3
             style={{
@@ -132,13 +149,15 @@ export default function Form() {
             multiline
             rows={5}
             name="reason"
-            type="text"
+            type="reason"
             id="reason"
             inputRef={register({ required: true })}
           />
           {errors.reason && (
             <>
-              <span className={classes.font}>書き忘れています</span>
+              <span className={classes.font}>
+                読みたい理由を入力してください
+              </span>
               <br />
             </>
           )}
