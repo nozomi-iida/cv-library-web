@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useContext, useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import firebase from "../../firebase/firebase"
+import { AuthContext } from "../../store/authStore";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,13 +35,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn({history}) {
   const [error,setError]=useState("")
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
+  const user=useContext(AuthContext)
+  if(user){
+    return<Redirect to="/"/>
+  }
   const onSubmit = (data) => {
     setError("")
     firebase.auth().signInWithEmailAndPassword(data.email,data.password)
+    .then(()=>{
+      history.push("/")
+    })
     .catch(err=>{
       switch(err.code){
         case "auth/invalid-email":
@@ -63,7 +72,7 @@ export default function SignIn() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <span  style={{color:"red"}}>{error}</span>
+        <span style={{ color: "red" }}>{error}</span>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -113,20 +122,19 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
- 
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Button color="primary" >
                 Forgot password?
-              </Link>
+              </Button>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Button color="primary" onClick={()=>history.push("/signUp")}>
                 アカウントを作成しますか？
-              </Link>
+              </Button>
             </Grid>
           </Grid>
         </form>

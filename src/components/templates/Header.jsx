@@ -17,6 +17,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import Avatar from "@material-ui/core/Avatar";
+import firebase from "../../firebase/firebase"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -77,8 +78,8 @@ export default function ButtonAppBar() {
             <ListItemText primary="aaaa@gmail.com" />
           </div>
         </ListItem>
-        <ListItem style={{ backgroundColor: "#4fc3f7", height: 40 }}>
-          <IconButton >ログアウト</IconButton>
+        <ListItem style={{ height: 40 ,backgroundColor:"#3f51b5"}}>
+          <IconButton style={{color:"#fff", width:"100%"}} onClick={()=>firebase.auth().signOut()}>ログアウト</IconButton>
         </ListItem>
       </List>
     </div>
