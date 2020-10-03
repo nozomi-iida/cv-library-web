@@ -37,16 +37,16 @@ export default function Form({ history }) {
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
-    firebase
-      .firestore()
-      .collection("books")
-      .add({
-        username: "",
-        reviews: 0,
-        status: "読みたい本",
-        impression: "",
-        ...data,
-      });
+    firebase.firestore().collection("books").add({
+      username: "",
+      reviews: 0,
+      status: "読みたい本",
+      impression: "",
+      title: data.title,
+      url: data.url,
+      details: data.details,
+      reason: data.reason,
+    });
     history.push("/");
   };
 
@@ -98,7 +98,7 @@ export default function Form({ history }) {
             required
             fullWidth
             name="url"
-            type="text"
+            type="url"
             id="url"
             inputRef={register({ required: true })}
           />
@@ -122,7 +122,7 @@ export default function Form({ history }) {
             multiline
             rows={5}
             name="details"
-            type="text"
+            type="details"
             id="details"
             inputRef={register({ required: true })}
           />
@@ -148,7 +148,7 @@ export default function Form({ history }) {
             multiline
             rows={5}
             name="reason"
-            type="text"
+            type="reason"
             id="reason"
             inputRef={register({ required: true })}
           />
