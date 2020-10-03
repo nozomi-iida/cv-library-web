@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
+// import Link from "@material-ui/core/Link";
 // import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -35,10 +35,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Form({ history }) {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  // const [title, setTitle] = useState("");
-  // const [url, setUrl] = useState("");
-  // const [reason, setReason] = useState("");
-  // const [description, setDescription] = useState("");
 
   const onSubmit = (data) => {
     firebase
@@ -51,7 +47,6 @@ export default function Form({ history }) {
         impression: "",
         ...data,
       });
-    console.log(data.title);
     history.push("/");
   };
 
@@ -83,11 +78,10 @@ export default function Form({ history }) {
             autoComplete="title"
             autoFocus
             inputRef={register({ required: true })}
-            // onChange={(e) => setTitle(e.target.value)}
           />
 
           {errors.title && (
-            <span className={classes.font}>書き忘れています</span>
+            <span className={classes.font}>タイトルを入力してください</span>
           )}
           <h3
             style={{
@@ -107,9 +101,10 @@ export default function Form({ history }) {
             type="text"
             id="url"
             inputRef={register({ required: true })}
-            // onChange={(e) => setUrl(e.target.value)}
           />
-          {errors.url && <span className={classes.font}>書き忘れています</span>}
+          {errors.url && (
+            <span className={classes.font}>AmaszonのURLを入力してください</span>
+          )}
           <h3
             style={{
               width: "100%",
@@ -130,10 +125,11 @@ export default function Form({ history }) {
             type="text"
             id="details"
             inputRef={register({ required: true })}
-            // onChange={(e) => setDescription(e.target.value)}
           />
           {errors.details && (
-            <span className={classes.font}>書き忘れています</span>
+            <span className={classes.font}>
+              本の簡単な詳細を入力してください
+            </span>
           )}
           <h3
             style={{
@@ -155,11 +151,12 @@ export default function Form({ history }) {
             type="text"
             id="reason"
             inputRef={register({ required: true })}
-            // onChange={(e) => setReason(e.target.value)}
           />
           {errors.reason && (
             <>
-              <span className={classes.font}>書き忘れています</span>
+              <span className={classes.font}>
+                読みたい理由を入力してください
+              </span>
               <br />
             </>
           )}
