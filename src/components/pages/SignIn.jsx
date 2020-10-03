@@ -39,7 +39,7 @@ export default function SignIn({history}) {
   const [error,setError]=useState("")
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  const user=useContext(AuthContext)
+  const user = useContext(AuthContext)
   if(user){
     return<Redirect to="/"/>
   }
