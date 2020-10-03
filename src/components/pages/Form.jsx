@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-// import Link from "@material-ui/core/Link";
+import Link from "@material-ui/core/Link";
 // import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -34,25 +34,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Form({ history }) {
   const classes = useStyles();
-  const { register, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
+  // const [title, setTitle] = useState("");
+  // const [url, setUrl] = useState("");
+  // const [reason, setReason] = useState("");
+  // const [description, setDescription] = useState("");
 
-  const [title, setTitle] = useState("");
-  const [url, setUrl] = useState("");
-  const [reason, setReason] = useState("");
-  const [description, setDescription] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    firebase.firestore().collection("books").add({
-      username: "",
-      title: title,
-      reason: reason,
-      url: url,
-      description: description,
-      reviews: 0,
-      status: "読みたい本",
-      impression: "",
-    });
+  const onSubmit = (data) => {
+    firebase
+      .firestore()
+      .collection("books")
+      .add({
+        username: "",
+        reviews: 0,
+        status: "読みたい本",
+        impression: "",
+        ...data,
+      });
+    console.log(data.title);
     history.push("/");
   };
 
@@ -60,7 +59,11 @@ export default function Form({ history }) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <form className={classes.form} onSubmit={handleSubmit} noValidate>
+        <form
+          className={classes.form}
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+        >
           <h3
             style={{
               width: "100%",
@@ -80,7 +83,7 @@ export default function Form({ history }) {
             autoComplete="title"
             autoFocus
             inputRef={register({ required: true })}
-            onChange={(e) => setTitle(e.target.value)}
+            // onChange={(e) => setTitle(e.target.value)}
           />
 
           {errors.title && (
@@ -101,10 +104,10 @@ export default function Form({ history }) {
             required
             fullWidth
             name="url"
-            type="url"
+            type="text"
             id="url"
             inputRef={register({ required: true })}
-            onChange={(e) => setUrl(e.target.value)}
+            // onChange={(e) => setUrl(e.target.value)}
           />
           {errors.url && <span className={classes.font}>書き忘れています</span>}
           <h3
@@ -124,10 +127,10 @@ export default function Form({ history }) {
             multiline
             rows={5}
             name="details"
-            type="details"
+            type="text"
             id="details"
             inputRef={register({ required: true })}
-            onChange={(e) => setDescription(e.target.value)}
+            // onChange={(e) => setDescription(e.target.value)}
           />
           {errors.details && (
             <span className={classes.font}>書き忘れています</span>
@@ -152,7 +155,7 @@ export default function Form({ history }) {
             type="text"
             id="reason"
             inputRef={register({ required: true })}
-            onChange={(e) => setReason(e.target.value)}
+            // onChange={(e) => setReason(e.target.value)}
           />
           {errors.reason && (
             <>
