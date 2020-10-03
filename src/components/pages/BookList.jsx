@@ -5,21 +5,29 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
+    height: '100vh', 
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
     margin: "auto",
     marginTop: 10,
+    position: 'relative',
   },
-
   primary: {
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
+  addButton: {
+    fontSize: 30, 
+    position: "fixed", 
+    bottom: 150,
+    right: '25%',
+  }
 }));
 
 
@@ -63,11 +71,12 @@ export default function SimpleList({history}) {
         <Divider />
       </List>
       <IconButton
-        className="fa fa-plus-circle"
+        className={classes.addButton}
         color="primary"
-        style={{ fontSize: 30 , position:"fixed" , bottom:100,marginLeft:400}}
         onClick={goform}
-    />
+      >
+        <AddCircleIcon fontSize="large" />
+      </IconButton>
     </div>
   </>
   );
