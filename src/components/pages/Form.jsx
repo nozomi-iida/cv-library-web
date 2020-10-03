@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    paddingBottom: 70
   },
   avatar: {
     margin: theme.spacing(1),
@@ -35,10 +36,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Form({ history }) {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  // const [title, setTitle] = useState("");
-  // const [url, setUrl] = useState("");
-  // const [reason, setReason] = useState("");
-  // const [description, setDescription] = useState("");
 
   const onSubmit = (data) => {
     firebase
@@ -49,7 +46,7 @@ export default function Form({ history }) {
         reviews: 0,
         status: "読みたい本",
         impression: "",
-        ...data,
+        title: data.title,
       });
     console.log(data.title);
     history.push("/");
