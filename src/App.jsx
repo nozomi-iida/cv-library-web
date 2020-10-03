@@ -7,19 +7,23 @@ import Form from "./components/pages/Form";
 import SignIn from "./components/pages/SignIn";
 import BookList from "./components/pages/BookList";
 import BookDetail from "./components/pages/BookDetail";
+import {AuthProvider} from "./store/authStore"
+import LoggedInRoute from "./router/LoggedInRouter";
 function App() {
   return (
     <div className="App">
       <Header />
+      <AuthProvider>
       <Router>
         <Switch>
           <Route exact path="/" component={BookList} />
           <Route exact path="/book" component={BookDetail} />
-          <Route exact path="/add" component={Form} />
+          <LoggedInRoute exact path="/add" component={Form} />
           <Route exact path="/signIn" component={SignIn} />
           <Route exact path="/signUp" component={SignUp} />
         </Switch>
       </Router>
+      </AuthProvider>
       <Footer />
     </div>
   );

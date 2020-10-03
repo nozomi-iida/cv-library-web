@@ -123,6 +123,14 @@ export default function Books({ history }) {
         >
           削除する
         </Button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          disableElevation
+        >
+          読了
+        </Button>
       </div>
     </div>
   );

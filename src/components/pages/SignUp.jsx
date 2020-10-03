@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,8 @@ import { useForm } from 'react-hook-form';
 import IconModal from '../templates/IconModal';
 import firebase from '../../firebase/firebase';
 import { fireStorage } from '../../firebase/firebase';
+import { AuthContext } from '../../store/authStore';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -36,11 +38,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SignUp() {
+  const classes = useStyles();
   const [file, setFile] = React.useState(null);
   const [image, setImage] = React.useState('');
   const [error, setError] = useState('');
+  const history = useHistory();
+  const user = useContext(AuthContext);
   var emailreg=/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
   const { register, handleSubmit, errors } = useForm();
+  if(user){
+    return<Redirect to="/"/>
+  }
   const onSubmit = data => {
     setError("")
     if (data.confirmpassword !== data.password) {
@@ -61,6 +69,7 @@ export default function SignUp() {
             displayName: data.Name,
             photoURL: "",
           });
+          history.push('/');
         })
         .catch((er) => {
           switch(er.code){
@@ -87,6 +96,7 @@ export default function SignUp() {
                 displayName: data.Name,
                 photoURL: downloadURL,
               });
+              history.push('/');
             })
             .catch(er => {
               console.log(er);
@@ -101,9 +111,6 @@ export default function SignUp() {
   const addFile = file => {
     setFile(file);
   };
-  const classes = useStyles();
-
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -114,7 +121,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <span style={{color:"red"}}>{error}</span>
+        <span style={{ color: "red" }}>{error}</span>
         <IconModal addFile={addFile} setImage={setImage} image={image} />
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
@@ -197,9 +204,9 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Button color="primary" onClick={()=>history.push("/signIn")}>
                 アカウントをすでにお持ちですか？
-              </Link>
+              </Button>
             </Grid>
           </Grid>
         </form>
