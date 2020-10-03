@@ -62,13 +62,13 @@ export default function SimpleList({history}) {
         </ListItemLink>
         <Divider />
       </List>
+      <IconButton
+        className="fa fa-plus-circle"
+        color="primary"
+        style={{ fontSize: 30 , position:"fixed" , bottom:100,marginLeft:400}}
+        onClick={goform}
+    />
     </div>
-  <IconButton
-    className="fa fa-plus-circle"
-    color="primary"
-    style={{ fontSize: 30 , position:"fixed" , bottom:100, right:700}}
-    onClick={goform}
-/>
   </>
   );
 }
