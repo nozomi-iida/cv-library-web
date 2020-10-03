@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
   addButton: {
     fontSize: 30, 
     position: "fixed", 
-    bottom: 150,
-    right: '25%',
+    right: '0%',
+    bottom: '7%',
   }
 }));
 
