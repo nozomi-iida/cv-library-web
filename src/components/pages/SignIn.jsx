@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -34,13 +34,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const [error,setError]=useState("")
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
+    setError("")
     firebase.auth().signInWithEmailAndPassword(data.email,data.password)
     .catch(err=>{
-      console.log(err)
-    })
+      switch(err.code){
+        case "auth/invalid-email":
+          setError("Emailが正しくありません")
+          break
+        case "auth/user-not-found":
+          setError("ユーザーがみつかりません")    
+          break
+        case "auth/wrong-password":
+          setError("パスワードが違います")
+          break
+        }
+        console.log(err.code)
+      })
   };
 
   return (
@@ -50,6 +63,7 @@ export default function SignIn() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
+        <span  style={{color:"red"}}>{error}</span>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
