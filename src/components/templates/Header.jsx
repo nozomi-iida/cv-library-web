@@ -109,7 +109,6 @@ export default function ButtonAppBar() {
               </SwipeableDrawer>
             </React.Fragment>
           ))}
-
           <Typography variant="h6" className={classes.title}>
             CV Library
           </Typography>

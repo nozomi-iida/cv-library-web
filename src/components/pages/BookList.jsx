@@ -4,31 +4,45 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
+    height: '100vh', 
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
     margin: "auto",
     marginTop: 10,
+    position: 'relative',
   },
-
   primary: {
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
   },
+  addButton: {
+    fontSize: 30, 
+    position: "fixed", 
+    bottom: 150,
+    right: '25%',
+  }
 }));
+
 
 function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-export default function SimpleList() {
+export default function SimpleList({history}) {
   const classes = useStyles();
+  const goform = () => {
+    history.push("/add");
+  };
 
   return (
+    <>
     <div className={classes.root}>
       <List component="nav">
         <ListItemLink href="/book">
@@ -56,6 +70,14 @@ export default function SimpleList() {
         </ListItemLink>
         <Divider />
       </List>
+      <IconButton
+        className={classes.addButton}
+        color="primary"
+        onClick={goform}
+      >
+        <AddCircleIcon fontSize="large" />
+      </IconButton>
     </div>
+  </>
   );
 }
