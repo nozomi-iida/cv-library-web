@@ -39,11 +39,19 @@ export default function SignUp() {
   const [file, setFile] = React.useState(null);
   const [image, setImage] = React.useState('');
   const [error, setError] = useState('');
+  var emailreg=/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = data => {
+    setError("")
     if (data.confirmpassword !== data.password) {
-      return setError('passwordと一致しません');
+      return setError('PasswordとconfirmPasswordが一致しません');
+    }else if(data.password.length < 6){
+      return setError("Passwordを６文字以上にしてください")
+    }else if(emailreg.test(data.email)){
+    }else{
+      return setError("Emailが正しくありません")
     }
+    
     if (image === '') {
       firebase
         .auth()
@@ -51,8 +59,16 @@ export default function SignUp() {
         .then(({ user }) => {
           user.updateProfile({
             displayName: data.Name,
-            photoURL: '',
+            photoURL: "",
           });
+        })
+        .catch((er) => {
+          switch(er.code){
+            case "auth/email-already-in-use":
+              setError("このemailはすでに使用されています")
+              break
+            }
+          // error
         });
     } else {
       firebase
@@ -87,83 +103,83 @@ export default function SignUp() {
   };
   const classes = useStyles();
 
-  console.log(firebase.auth().currentUser);
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component='h1' variant='h5'>
+        <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <span style={{color:"red"}}>{error}</span>
         <IconModal addFile={addFile} setImage={setImage} image={image} />
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                autoComplete='name'
-                name='Name'
-                variant='outlined'
+                autoComplete="name"
+                name="Name"
+                variant="outlined"
                 fullWidth
-                id='Name'
-                label='Name'
+                id="Name"
+                label="Name"
                 autoFocus
                 inputRef={register({ required: true })}
               />
-              {errors.email && (
-                <span style={{ color: 'red' }}>名前を入力してください</span>
+              {errors.Name && (
+                <span style={{ color: "red" }}>名前を入力してください</span>
               )}
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant='outlined'
+                variant="outlined"
                 fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
                 inputRef={register({ required: true })}
               />
               {errors.email && (
-                <span style={{ color: 'red' }}>
+                <span style={{ color: "red" }}>
                   メールアドレスを入力してください
                 </span>
               )}
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant='outlined'
+                variant="outlined"
                 fullWidth
-                name='password'
-                label='Password'
-                type='password'
-                id='password'
-                autoComplete='current-password'
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
                 inputRef={register({ required: true })}
               />
-              {errors.email && (
-                <span style={{ color: 'red' }}>
+              {errors.password && (
+                <span style={{ color: "red" }}>
                   パスワードを入力してください
                 </span>
               )}
             </Grid>
             <Grid item xs={12}>
               <TextField
-                variant='outlined'
+                variant="outlined"
                 fullWidth
-                name='confirmpassword'
-                label='confirmPassword'
-                type='password'
-                id='confirmpassword'
-                autoComplete='confirmpassword'
+                name="confirmpassword"
+                label="confirmPassword"
+                type="password"
+                id="confirmpassword"
+                autoComplete="confirmpassword"
                 inputRef={register({ required: true })}
               />
-              <span>{error}</span>
-              {errors.email && (
-                <span style={{ color: 'red' }}>
+
+              {errors.confirmpassword && (
+                <span style={{ color: "red" }}>
                   パスワード(確認用)を入力してください
                 </span>
               )}
@@ -171,17 +187,17 @@ export default function SignUp() {
           </Grid>
 
           <Button
-            type='submit'
+            type="submit"
             fullWidth
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             className={classes.submit}
           >
             Sign Up
           </Button>
-          <Grid container justify='flex-end'>
+          <Grid container justify="flex-end">
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link href="#" variant="body2">
                 アカウントをすでにお持ちですか？
               </Link>
             </Grid>
