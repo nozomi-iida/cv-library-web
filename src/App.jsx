@@ -12,19 +12,19 @@ import LoggedInRoute from "./router/LoggedInRouter";
 function App() {
   return (
     <div className="App">
-      <Header />
       <AuthProvider>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={BookList} />
-          <Route exact path="/book" component={BookDetail} />
-          <LoggedInRoute exact path="/add" component={Form} />
-          <Route exact path="/signIn" component={SignIn} />
-          <Route exact path="/signUp" component={SignUp} />
-        </Switch>
-      </Router>
+        <Router>
+          <Header />
+          <Switch>
+            <Route exact path="/book" component={BookDetail} />
+            <Route exact path="/add" component={Form} />
+            <Route exact path="/signIn" component={SignIn} />
+            <LoggedInRoute exact path="/" component={BookList} />
+            <Route exact path="/signUp" component={SignUp} />
+          </Switch>
+          <Footer />
+        </Router>
       </AuthProvider>
-      <Footer />
     </div>
   );
 }

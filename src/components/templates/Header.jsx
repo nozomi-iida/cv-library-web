@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -20,6 +20,7 @@ import Avatar from "@material-ui/core/Avatar";
 import firebase from "../../firebase/firebase"
 
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
+  const user =firebase.auth().currentUser
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -55,7 +57,17 @@ export default function ButtonAppBar() {
     setState({ ...state, [anchor]: open });
   };
 
+
+  const logout = () => {
+    console.log(firebase.auth().currentUser);
+    firebase.auth().signOut().then(()=>{
+    })
+  }
+
+
+
   const list = (anchor) => (
+
     <div
       className={clsx(classes.list, {
         [classes.fullList]: anchor === "top" || anchor === "bottom",
@@ -79,7 +91,7 @@ export default function ButtonAppBar() {
           </div>
         </ListItem>
         <ListItem style={{ height: 40 ,backgroundColor:"#3f51b5"}}>
-          <IconButton style={{color:"#fff", width:"100%"}} onClick={()=>firebase.auth().signOut()}>ログアウト</IconButton>
+          <IconButton style={{color:"#fff", width:"100%"}} onClick={logout}>ログアウト</IconButton>
         </ListItem>
       </List>
     </div>
