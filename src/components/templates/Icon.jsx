@@ -58,7 +58,6 @@ const Icon = ({ image, handleDrop, addImage, handleClose,addFile }) => {
           id="contained-button-file"
           multiple
           type="file"
-          accept="Image/*"
           onChange={(e) => Change(e.target.files[0])}
         />
         <label

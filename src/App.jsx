@@ -9,7 +9,13 @@ import BookList from "./components/pages/BookList";
 import BookDetail from "./components/pages/BookDetail";
 import {AuthProvider} from "./store/authStore"
 import LoggedInRoute from "./router/LoggedInRouter";
+
+
+
+
+
 function App() {
+
   return (
     <div className="App">
       <AuthProvider>

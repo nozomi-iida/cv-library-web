@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -6,6 +6,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import {useDispatch, useSelector} from "react-redux"
+import firebase from "../../firebase/firebase"
+import {BookAddAction}from "../../reducks/books/actions"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,11 +39,26 @@ function ListItemLink(props) {
 }
 
 export default function SimpleList({history}) {
+
+  const selector = useSelector((state) => state);
+  const dispatch=useDispatch()
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection("books")
+      .onSnapshot((snapshot) => {
+        const books = snapshot.docs.map((doc) => {
+          return doc.data();
+        });
+        dispatch(BookAddAction(books));
+      });
+  }, []);
   const classes = useStyles();
   const goform = () => {
     history.push("/add");
   };
-
+  console.log(selector.books)
+  
   return (
     <>
     <div className={classes.root}>
