@@ -1,6 +1,6 @@
 const initialState = {
-  books: {
-  },
+  books: []
+  ,
 };
 
 export default initialState;

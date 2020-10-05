@@ -1,6 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import { useParams } from "react-router-dom";
+import {useSelector} from "react-redux"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,7 +61,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Books({ history }) {
+export default function BookDetail({ history }) {
+  const {id}=useParams()
+  const books=useSelector(state=>state.books)
+
+  console.log(books);
+  console.log(id)
+  const book=books.find(b=>b.id===id)
+      console.log(book);
+
+  
   const classes = useStyles();
   const handleBack = () => {
     history.push("/");
@@ -135,3 +146,4 @@ export default function Books({ history }) {
     </div>
   );
 }
+
