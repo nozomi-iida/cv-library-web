@@ -1,13 +1,13 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-// import Link from "@material-ui/core/Link";
-// import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import firebase from "../../firebase/firebase";
+import shortid from "shortid"
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,11 +34,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form({ history }) {
+
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
 
+  const now = new Date()
+
   const onSubmit = (data) => {
-    firebase.firestore().collection("books").add({
+      const now = new Date()
+      firebase.firestore().collection("books").add({
       username: "",
       reviews: 0,
       status: "読みたい本",
@@ -47,9 +51,13 @@ export default function Form({ history }) {
       url: data.url,
       details: data.details,
       reason: data.reason,
+      id :shortid.generate(),
+      time: now
     });
     history.push("/");
   };
+
+
 
   return (
     <Container component="main" maxWidth="xs">
