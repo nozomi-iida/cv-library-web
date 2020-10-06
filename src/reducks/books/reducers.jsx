@@ -5,7 +5,6 @@ export const BooksReducer = (state = initialState.books, action) => {
   switch (action.type) {
     case Actions.Book_Add:
       return [
-        ...state,
         ...action.payload,
       ]
     default:
