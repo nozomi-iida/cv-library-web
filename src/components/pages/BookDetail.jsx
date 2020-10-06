@@ -1,9 +1,9 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { useParams } from "react-router-dom";
 import {useSelector} from "react-redux"
-
+import firebase from "../../firebase/firebase"
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BookDetail({ history }) {
+ 
   const {id}=useParams()
   const books=useSelector(state=>state.books)
 
@@ -69,12 +70,16 @@ export default function BookDetail({ history }) {
   console.log(id)
   const book=books.find(b=>b.id===id)
       console.log(book);
-
+  console.log(book.time)
   
   const classes = useStyles();
   const handleBack = () => {
     history.push("/");
   };
+
+  const date= new Date(book.time.seconds * 1000)
+  const manth=date.getMonth()+1
+  const date1=(date.getFullYear()+"年"+manth+"月"+date.getDate()+"日")
   return (
     <div className={classes.root}>
       <Button className={classes.back} onClick={handleBack}>
@@ -87,10 +92,10 @@ export default function BookDetail({ history }) {
           border="4"
         />
         <div className={classes.description}>
-          <h4 className={classes.text}>React.js&Next.js</h4>
+  <h4 className={classes.text}>{book.title}</h4>
           <div className={classes.info}>
             <p>作成者：イイダノゾミ</p>
-            <p className={classes.text}>作成日：2020/9/31</p>
+            <p className={classes.text}>{`作成日：${date1}`}</p>
           </div>
         </div>
       </div>
@@ -106,7 +111,7 @@ export default function BookDetail({ history }) {
         <div className={classes.contents}>
           <h3 className={classes.text}>本の簡単な概要</h3>
           <p className={classes.text + " " + classes.sentence}>
-            サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
+            {book.details}
           </p>
           <div className={classes.more}>
             <Button className={classes.read}>全文を読む</Button>
@@ -115,7 +120,7 @@ export default function BookDetail({ history }) {
         <div className={classes.contents}>
           <h3 className={classes.text}>読みたい理由</h3>
           <p className={classes.text + " " + classes.sentence}>
-            サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
+            {book.reason}
           </p>
         </div>
         <Button
