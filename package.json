@@ -15,8 +15,11 @@
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.2.0",
     "react-hook-form": "^6.9.0",
+    "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "redux": "^4.0.5",
+    "shortid": "^2.2.15",
     "yarn": "^1.22.5"
   },
   "scripts": {
