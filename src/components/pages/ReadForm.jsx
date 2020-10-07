@@ -1,47 +1,46 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button"
+import Button from "@material-ui/core/Button";
 import Rating from "@material-ui/lab/Rating";
 import TextField from "@material-ui/core/TextField";
 const ReadForm = () => {
   const useStyles = makeStyles((theme) => ({
     root: {
-    display: 'flex',
-    alignItems:"center",
+      display: "flex",
+      alignItems: "center",
 
-    flexDirection: 'column',
-    '& > * + *': {
-      marginTop: theme.spacing(1),
-    }},
+      flexDirection: "column",
+      "& > * + *": {
+        marginTop: theme.spacing(1),
+      },
+    },
     paper: {
       marginTop: theme.spacing(8),
       alignItems: "center",
       paddingBottom: 40,
     },
-    back:{
-      padding:0,
+    back: {
+      padding: 0,
     },
-    ryou:{
-      paddingLeft:40,
+    ryou: {
+      paddingLeft: 40,
     },
-    text:{
-      marginTop:theme.spacing(2),
-      display:"flex",
-      justifyContent:"center",
-      marginRight:"auto",
-      marginLeft:"auto",
-      maxWidth:"30ch",
+    text: {
+      marginTop: theme.spacing(2),
+      display: "flex",
+      justifyContent: "center",
+      marginRight: "auto",
+      marginLeft: "auto",
+      maxWidth: "30ch",
     },
-    centerbutton:{
-      display:"flex",
-      justifyContent:"center",
-    }
+    centerbutton: {
+      display: "flex",
+      justifyContent: "center",
+    },
   }));
   const classes = useStyles();
-  const handleSubmit=()=>{
-
-  }
+  const handleSubmit = () => {};
 
   return (
     <Container component="main" maxWidth="xs">
@@ -67,9 +66,9 @@ const ReadForm = () => {
         />
       </div>
       <div className={classes.centerbutton}>
-      <Button onClick={handleSubmit} variant="contained" color="primary">
-        読了
-      </Button>
+        <Button onClick={handleSubmit} variant="contained" color="primary">
+          読了
+        </Button>
       </div>
     </Container>
   );
