@@ -3,8 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import DeleteModal from "../templates/DeleteModal";
 import { useParams } from "react-router-dom";
-import {useSelector} from "react-redux"
-import firebase from "../../firebase/firebase"
+import { useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -63,21 +62,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BookDetail({ history }) {
-  const {id}=useParams()
-  const books=useSelector(state=>state.books)
-  const book=books.find(b=>b.id===id)
+  const { id } = useParams();
+  const books = useSelector((state) => state.books);
+  const book = books.find((b) => b.id === id);
   const classes = useStyles();
   const handleBack = () => {
     history.push("/");
   };
   const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const date= new Date(book.time.seconds * 1000)
-  const manth=date.getMonth()+1
-  const date1=(date.getFullYear()+"年"+manth+"月"+date.getDate()+"日")
+  const date = new Date(book.time.seconds * 1000);
+  const manth = date.getMonth() + 1;
+  const date1 =
+    date.getFullYear() + "年" + manth + "月" + date.getDate() + "日";
   return (
     <div className={classes.root}>
       <Button className={classes.back} onClick={handleBack}>
@@ -90,9 +86,9 @@ export default function BookDetail({ history }) {
           border="4"
         />
         <div className={classes.description}>
-  <h4 className={classes.text}>{book.title}</h4>
+          <h4 className={classes.text}>{book.title}</h4>
           <div className={classes.info}>
-            <p>作成者：イイダノゾミ</p>
+            <p>作成者：{book.username}</p>
             <p className={classes.text}>{`作成日：${date1}`}</p>
           </div>
         </div>
@@ -117,9 +113,7 @@ export default function BookDetail({ history }) {
         </div>
         <div className={classes.contents}>
           <h3 className={classes.text}>読みたい理由</h3>
-          <p className={classes.text + " " + classes.sentence}>
-            {book.reason}
-          </p>
+          <p className={classes.text + " " + classes.sentence}>{book.reason}</p>
         </div>
         <Button
           className={classes.button}
@@ -151,4 +145,3 @@ export default function BookDetail({ history }) {
     </div>
   );
 }
-

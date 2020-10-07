@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useContext, useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -6,8 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import firebase from "../../firebase/firebase";
-import shortid from "shortid"
-
+import shortid from "shortid";
+import { AuthContext } from "../../store/authStore";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -34,30 +34,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form({ history }) {
-
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-
-  const now = new Date()
-
+  const [urlerror, setUrlerror] = useState("");
+  const user = useContext(AuthContext);
+  const sampleUrl = new RegExp("^https://www.amazon.co.jp/.");
   const onSubmit = (data) => {
-      const now = new Date()
+    if (sampleUrl.test(data.url)) {
+      const now = new Date();
       firebase.firestore().collection("books").add({
-      username: "",
-      reviews: 0,
-      status: "読みたい本",
-      impression: "",
-      title: data.title,
-      url: data.url,
-      details: data.details,
-      reason: data.reason,
-      id :shortid.generate(),
-      time: now
-    });
-    history.push("/");
+        username: user.displayName,
+        reviews: 0,
+        status: "読みたい本",
+        impression: "",
+        title: data.title,
+        url: data.url,
+        details: data.details,
+        reason: data.reason,
+        id: shortid.generate(),
+        time: now,
+      });
+      history.push("/");
+    } else {
+      setUrlerror("err");
+    }
   };
-
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -113,6 +114,9 @@ export default function Form({ history }) {
           />
           {errors.url && (
             <span className={classes.font}>AmaszonのURLを入力してください</span>
+          )}
+          {urlerror && (
+            <span className={classes.font}>URLが間違っています</span>
           )}
           <h3
             style={{
