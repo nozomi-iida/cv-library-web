@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -45,23 +45,23 @@ const ReadForm = () => {
   }));
   const classes = useStyles();
   const { id } = useParams();
-  const [rating,setRating]=useState(2.5)
+  const [rating, setRating] = useState(2.5);
 
-  const onSubmit = (data) => {   
-  firebase
-    .firestore().collection("books").where("id", "==", id).get()
-    .then((doc) => {
-      const docid = doc.docs[0].id;
-        console.log(docid)
-      firebase.firestore().collection("books").doc(docid).update({
-        status:"読了",
-        impression:data.text,
-        reviews:rating,
-      }
-      ) 
-    })
-  }
-  
+  const onSubmit = (data) => {
+    firebase
+      .firestore()
+      .collection("books")
+      .where("id", "==", id)
+      .get()
+      .then((doc) => {
+        const docid = doc.docs[0].id;
+        firebase.firestore().collection("books").doc(docid).update({
+          status: "読了",
+          impression: data.text,
+          reviews: rating,
+        });
+      });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -76,8 +76,8 @@ const ReadForm = () => {
               defaultValue={2.5}
               precision={0.5}
               style={{ fontSize: 40 }}
-              onChange={(e)=>{
-                setRating(e.target.value)
+              onChange={(e) => {
+                setRating(e.target.value);
               }}
             />
           </div>

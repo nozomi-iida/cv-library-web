@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 export default function SimpleList({ history }) {
   const books = useSelector((state) => state.books);
 
-
   const classes = useStyles();
   const goform = () => {
     history.push("/add");

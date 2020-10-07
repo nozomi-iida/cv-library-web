@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", 
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -35,8 +35,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Form({ history }) {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-
-  const now = new Date();
 
   const onSubmit = (data) => {
     const now = new Date();
