@@ -12,6 +12,7 @@ import LoggedInRoute from "./router/LoggedInRouter";
 import { useDispatch, useSelector } from "react-redux";
 import firebase from "./firebase/firebase"
 import {BookAddAction} from "./reducks/books/actions"
+import ReadForm from "./components/pages/ReadForm"
 
 
 
@@ -37,13 +38,14 @@ function App() {
       <AuthProvider>
         <Router>
           <Header />
-          <Switch>
+          {/* <Switch>
             <Route exact path="/book/:id" component={BookDetail} />
             <Route exact path="/add" component={Form} />
             <Route exact path="/signIn" component={SignIn} />
             <LoggedInRoute exact path="/" component={BookList} />
             <Route exact path="/signUp" component={SignUp} />
-          </Switch>
+          </Switch> */}
+          <ReadForm />
           <Footer />
         </Router>
       </AuthProvider>
