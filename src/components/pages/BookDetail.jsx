@@ -74,6 +74,10 @@ export default function BookDetail({ history }) {
   const manth = date.getMonth() + 1;
   const date1 =
     date.getFullYear() + "年" + manth + "月" + date.getDate() + "日";
+
+  const handleOpen = () => {
+    setOpen(true);
+  }
   return (
     <div className={classes.root}>
       <Button className={classes.back} onClick={handleBack}>
