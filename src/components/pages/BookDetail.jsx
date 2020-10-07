@@ -121,6 +121,31 @@ export default function BookDetail({ history }) {
             {book.reason}
           </p>
         </div>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          disableElevation
+        >
+          編集する
+        </Button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          disableElevation
+          onClick={handleOpen}
+        >
+          削除する
+        </Button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="primary"
+          disableElevation
+        >
+          読了
+        </Button>
       </div>
       <DeleteModal open={open} setOpen={setOpen} />
     </div>
