@@ -18,19 +18,19 @@ import ReadForm from "./components/pages/ReadForm"
 
 function App() {
 
-    const books = useSelector((state) => state.books);
+
     const dispatch = useDispatch();
-     useEffect(() => {
-       firebase
-         .firestore()
-         .collection("books")
-         .onSnapshot((snapshot) => {
-           const books = snapshot.docs.map((doc) => {
-             return doc.data();
-           });
-           dispatch(BookAddAction(books));
-         });
-     }, []);
+    useEffect(() => {
+      firebase
+        .firestore()
+        .collection("books")
+        .onSnapshot((snapshot) => {
+          const books = snapshot.docs.map((doc) => {
+            return doc.data();
+          });
+          dispatch(BookAddAction(books));
+        });
+    }, []);
 
 
   return (
@@ -38,14 +38,14 @@ function App() {
       <AuthProvider>
         <Router>
           <Header />
-          {/* <Switch>
+          <Switch>
             <Route exact path="/book/:id" component={BookDetail} />
             <Route exact path="/add" component={Form} />
             <Route exact path="/signIn" component={SignIn} />
             <LoggedInRoute exact path="/" component={BookList} />
             <Route exact path="/signUp" component={SignUp} />
-          </Switch> */}
-          <ReadForm />
+            <Route exact path="/book/detail/:id" component={ReadForm}/>
+          </Switch>
           <Footer />
         </Router>
       </AuthProvider>

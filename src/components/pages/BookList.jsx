@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import BookListItem from "../templates/ListItem";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleList({ history }) {
   const books = useSelector((state) => state.books);
-  const dispatch = useDispatch();
+
 
   const classes = useStyles();
   const goform = () => {
