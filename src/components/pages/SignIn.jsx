@@ -1,4 +1,4 @@
-import React,{useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
-import firebase from "../../firebase/firebase"
+import firebase from "../../firebase/firebase";
 import { AuthContext } from "../../store/authStore";
 import { Redirect } from "react-router-dom";
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%", 
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -33,34 +33,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn({history}) {
-  const [error,setError]=useState("")
+export default function SignIn({ history }) {
+  const [error, setError] = useState("");
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  const user = useContext(AuthContext)
-  if(user){
-    return<Redirect to="/"/>
+  const user = useContext(AuthContext);
+  if (user) {
+    return <Redirect to="/" />;
   }
   const onSubmit = (data) => {
-    setError("")
-    firebase.auth().signInWithEmailAndPassword(data.email,data.password)
-    .then(()=>{
-      history.push("/")
-    })
-    .catch(err=>{
-      switch(err.code){
-        case "auth/invalid-email":
-          setError("Emailが正しくありません")
-          break
-        case "auth/user-not-found":
-          setError("ユーザーがみつかりません")    
-          break
-        case "auth/wrong-password":
-          setError("パスワードが違います")
-          break
-        }
-        console.log(err.code)
+    setError("");
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(data.email, data.password)
+      .then(() => {
+        history.push("/");
       })
+      .catch((err) => {
+        switch (err.code) {
+          case "auth/invalid-email":
+            setError("Emailが正しくありません");
+            break;
+          case "auth/user-not-found":
+            setError("ユーザーがみつかりません");
+            break;
+          case "auth/wrong-password":
+            setError("パスワードが違います");
+            break;
+        }
+        console.log(err.code);
+      });
   };
 
   return (
@@ -125,12 +127,10 @@ export default function SignIn({history}) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Button color="primary" >
-                Forgot password?
-              </Button>
+              <Button color="primary">Forgot password?</Button>
             </Grid>
             <Grid item>
-              <Button color="primary" onClick={()=>history.push("/signUp")}>
+              <Button color="primary" onClick={() => history.push("/signUp")}>
                 アカウントを作成しますか？
               </Button>
             </Grid>

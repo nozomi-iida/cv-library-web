@@ -1,20 +1,20 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Icon from './Icon';
-import { Avatar } from '@material-ui/core';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import Icon from "./Icon";
+import { Avatar } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -32,22 +32,26 @@ export default function IconModal({ setImage, image, addFile }) {
     setOpen(false);
   };
 
-  const addImage = file => {
+  const addImage = (file) => {
     setImage(file);
   };
 
-  const handleDrop = dropped => {
+  const handleDrop = (dropped) => {
     setImage(dropped[0]);
-    var newfile = new File([dropped[0]], './myfile.jpg');
+    var newfile = new File([dropped[0]], "./myfile.jpg");
     addFile(newfile);
   };
 
   return (
     <div>
-       <Avatar style={{ width: 200, height: 200 }} onClick={handleOpen} src={image}  />
+      <Avatar
+        style={{ width: 200, height: 200 }}
+        onClick={handleOpen}
+        src={image}
+      />
       <Modal
-        aria-labelledby='transition-modal-title'
-        aria-describedby='transition-modal-description'
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
         className={classes.modal}
         open={open}
         onClose={handleClose}
