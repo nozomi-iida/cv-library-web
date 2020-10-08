@@ -1,9 +1,8 @@
 import React from 'react';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   primary: {
@@ -13,12 +12,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ListItemLink(props) {
-  return <ListItem button component='a' {...props} />;
-}
-
 const BookListItem = ({ book }) => {
-  const history = useHistory();
   const classes = useStyles();
 
   return (
