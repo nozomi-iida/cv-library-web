@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,6 +21,6 @@ const Description = () => {
       </div>
     </Container>
   );
-}
- 
+};
+
 export default Description;
