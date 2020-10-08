@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import firebase from "../../firebase/firebase";
 import DeleteModal from "../templates/DeleteModal";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -65,6 +66,7 @@ export default function BookDetail({ history }) {
   const { id } = useParams();
   const books = useSelector((state) => state.books);
   const book = books.find((b) => b.id === id);
+  const docid = book.documentId;
   const classes = useStyles();
   const handleBack = () => {
     history.push("/");
@@ -77,7 +79,12 @@ export default function BookDetail({ history }) {
 
   const handleOpen = () => {
     setOpen(true);
-  }
+  };
+  const deleteBook = () => {
+    firebase.firestore().collection("books").doc(docid).delete();
+    history.push("/");
+  };
+
   return (
     <div className={classes.root}>
       <Button className={classes.back} onClick={handleBack}>
@@ -145,7 +152,7 @@ export default function BookDetail({ history }) {
           読了
         </Button>
       </div>
-      <DeleteModal open={open} setOpen={setOpen} />
+      <DeleteModal open={open} setOpen={setOpen} deleteBook={deleteBook} />
     </div>
   );
 }
