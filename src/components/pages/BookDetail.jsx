@@ -77,7 +77,10 @@ export default function BookDetail({ history }) {
 
   const handleOpen = () => {
     setOpen(true);
-  }
+  };
+  const hensy = () => {
+    history.push(`/book/bookDitail/edit/${id}`);
+  };
   return (
     <div className={classes.root}>
       <Button className={classes.back} onClick={handleBack}>
@@ -124,6 +127,7 @@ export default function BookDetail({ history }) {
           variant="contained"
           color="primary"
           disableElevation
+          onClick={hensy}
         >
           編集する
         </Button>

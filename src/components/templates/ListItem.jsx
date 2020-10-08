@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const BookListItem = ({ book }) => {
   const classes = useStyles();
 

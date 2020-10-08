@@ -7,6 +7,7 @@ import Form from "./components/pages/Form";
 import SignIn from "./components/pages/SignIn";
 import BookList from "./components/pages/BookList";
 import BookDetail from "./components/pages/BookDetail";
+import EditForm from "./components/pages/EditForm";
 import { AuthProvider } from "./store/authStore";
 import LoggedInRoute from "./router/LoggedInRouter";
 import { useDispatch } from "react-redux";
@@ -34,6 +35,11 @@ function App() {
         <Router>
           <Header />
           <Switch>
+            <Route
+              exact
+              path="/book/bookDitail/edit/:id"
+              component={EditForm}
+            />
             <Route exact path="/book/:id" component={BookDetail} />
             <Route exact path="/add" component={Form} />
             <Route exact path="/signIn" component={SignIn} />
