@@ -145,6 +145,7 @@ export default function BookDetail({ history }) {
           variant="contained"
           color="primary"
           disableElevation
+          onClick={() => history.push(`/book/detail/${id}`)}
         >
           読了
         </Button>
