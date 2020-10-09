@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import firebase from "../../firebase/firebase";
-const ReadForm = () => {
+const ReadForm = ({history}) => {
   const { register, handleSubmit } = useForm();
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,7 +66,12 @@ const ReadForm = () => {
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <Button className={classes.back}>←戻る</Button>
+        <Button
+          onClick={() => history.push(`/book/${id}`)}
+          className={classes.back}
+        >
+          ←戻る
+        </Button>
         <h3 className={classes.ryou}>読了*</h3>
         <form>
           <div className={classes.root}>
