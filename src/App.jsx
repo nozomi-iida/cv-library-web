@@ -10,12 +10,14 @@ import BookDetail from "./components/pages/BookDetail";
 import EditForm from "./components/pages/EditForm";
 import { AuthProvider } from "./store/authStore";
 import LoggedInRoute from "./router/LoggedInRouter";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import firebase from "./firebase/firebase";
 import { BookAddAction } from "./reducks/books/actions";
 import ReadForm from "./components/pages/ReadForm";
 
+
 function App() {
+  const books = useSelector((state) => state.books);
   const dispatch = useDispatch();
   useEffect(() => {
     firebase
@@ -23,7 +25,10 @@ function App() {
       .collection("books")
       .onSnapshot((snapshot) => {
         const books = snapshot.docs.map((doc) => {
-          return doc.data();
+          return {
+            documentId: doc.id,
+            ...doc.data(),
+          };
         });
         dispatch(BookAddAction(books));
       });
@@ -40,10 +45,12 @@ function App() {
               path="/book/bookDitail/edit/:id"
               component={EditForm}
             />
-            <Route exact path="/book/:id" component={BookDetail} />
-            <Route exact path="/add" component={Form} />
+            {books.length && (
+              <Route exact path="/book/:id" component={BookDetail} />
+            )}
+            <LoggedInRoute exact path="/add" component={Form} />
             <Route exact path="/signIn" component={SignIn} />
-            <LoggedInRoute exact path="/" component={BookList} />
+            <Route exact path="/" component={BookList} />
             <Route exact path="/signUp" component={SignUp} />
             <Route exact path="/book/detail/:id" component={ReadForm} />
           </Switch>

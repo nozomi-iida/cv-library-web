@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     height: 28,
   },
 }));
-export default function DeleteModal({ open, setOpen }) {
+export default function DeleteModal({ open, setOpen, deleteBook }) {
   const classes = useStyles();
   const handleClose = () => {
     setOpen(false);
@@ -56,6 +56,7 @@ export default function DeleteModal({ open, setOpen }) {
                 className={classes.button}
                 variant="contained"
                 color="primary"
+                onClick={deleteBook}
               >
                 はい
               </Button>
