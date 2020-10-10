@@ -7,6 +7,7 @@ import Form from "./components/pages/Form";
 import SignIn from "./components/pages/SignIn";
 import BookList from "./components/pages/BookList";
 import BookDetail from "./components/pages/BookDetail";
+import BookDescription from "./components/pages/BookDescription";
 import EditForm from "./components/pages/EditForm";
 import { AuthProvider } from "./store/authStore";
 import LoggedInRoute from "./router/LoggedInRouter";
@@ -14,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import firebase from "./firebase/firebase";
 import { BookAddAction } from "./reducks/books/actions";
 import ReadForm from "./components/pages/ReadForm";
-
 
 function App() {
   const books = useSelector((state) => state.books);
@@ -47,6 +47,13 @@ function App() {
             />
             {books.length && (
               <Route exact path="/book/:id" component={BookDetail} />
+            )}
+            {books.length && (
+              <Route
+                exact
+                path="/book/:id/discription"
+                component={BookDescription}
+              />
             )}
             <LoggedInRoute exact path="/add" component={Form} />
             <Route exact path="/signIn" component={SignIn} />
