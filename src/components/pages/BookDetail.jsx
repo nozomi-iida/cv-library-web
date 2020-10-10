@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import firebase from "../../firebase/firebase";
 import DeleteModal from "../templates/DeleteModal";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { AuthContext } from "../../store/authStore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +69,7 @@ export default function BookDetail({ history }) {
   const books = useSelector((state) => state.books);
   const book = books.find((b) => b.id === id);
   const docid = book.documentId;
+  const user = useContext(AuthContext);
   const classes = useStyles();
   const handleBack = () => {
     history.push("/");
@@ -134,33 +135,37 @@ export default function BookDetail({ history }) {
           <h3 className={classes.text}>読みたい理由</h3>
           <p className={classes.text + " " + classes.sentence}>{book.reason}</p>
         </div>
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          disableElevation
-          onClick={hensy}
-        >
-          編集する
-        </Button>
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          disableElevation
-          onClick={handleOpen}
-        >
-          削除する
-        </Button>
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          disableElevation
-          onClick={() => history.push(`/book/detail/${id}`)}
-        >
-          読了
-        </Button>
+        {book.userid === user.uid && (
+          <>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              disableElevation
+              onClick={hensy}
+            >
+              編集する
+            </Button>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              disableElevation
+              onClick={handleOpen}
+            >
+              削除する
+            </Button>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              disableElevation
+              onClick={() => history.push(`/book/detail/${id}`)}
+            >
+              読了
+            </Button>
+          </>
+        )}
       </div>
       <DeleteModal open={open} setOpen={setOpen} deleteBook={deleteBook} />
     </div>

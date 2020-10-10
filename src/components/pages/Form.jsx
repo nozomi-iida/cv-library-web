@@ -44,6 +44,7 @@ export default function Form({ history }) {
       const now = new Date();
       firebase.firestore().collection("books").add({
         username: user.displayName,
+        userid: user.uid,
         reviews: 0,
         status: "読みたい本",
         impression: "",
