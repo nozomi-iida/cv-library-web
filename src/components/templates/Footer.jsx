@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
+import { useDispatch, useSelector } from "react-redux";
+import { BookStatusChange } from "../../reducks/status/actions";
 
 const useStyles = makeStyles({
   root: {
@@ -14,13 +16,16 @@ const useStyles = makeStyles({
 
 const Footer = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
+  const dispatch = useDispatch();
+  const value = (state) => {
+    return state.status;
+  };
+  const status = useSelector(value);
   return (
     <BottomNavigation
-      value={value}
+      value={status}
       onChange={(event, newValue) => {
-        setValue(newValue);
+        dispatch(BookStatusChange(newValue));
       }}
       showLabels
       className={classes.root}

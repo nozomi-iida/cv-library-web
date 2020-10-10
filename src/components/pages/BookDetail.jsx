@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 export default function BookDetail({ history }) {
   const { id } = useParams();
   const books = useSelector((state) => state.books);
-  const book = books.find((b) => b.id === id);
+  const book = books.find((b) => b.documentId === id);
   const docid = book.documentId;
   const classes = useStyles();
   const handleBack = () => {
