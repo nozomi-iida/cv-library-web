@@ -35,11 +35,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Form({ history }) {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  const [urlerror, setUrlerror] = useState("");
   const user = useContext(AuthContext);
-  const sampleUrl = new RegExp("^https://www.amazon.co.jp/.");
   const onSubmit = (data) => {
-    if (sampleUrl.test(data.url)) {
       const now = new Date();
       firebase.firestore().collection("books").add({
         username: user.displayName,
@@ -54,10 +51,7 @@ export default function Form({ history }) {
         time: now,
       });
       history.push("/");
-    } else {
-      setUrlerror("err");
-    }
-  };
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -109,13 +103,13 @@ export default function Form({ history }) {
             name="url"
             type="url"
             id="url"
-            inputRef={register({ required: true })}
+            inputRef={register({ 
+              pattern: {value: new RegExp("^https://www.amazon.co.jp/."), message: "URLが間違っています"}, 
+              required: {value: true, message: "AmaszonのURLを入力してください" }})
+          }
           />
           {errors.url && (
-            <span className={classes.font}>AmaszonのURLを入力してください</span>
-          )}
-          {urlerror && (
-            <span className={classes.font}>URLが間違っています</span>
+            <span className={classes.font}>{errors.url.message}</span>
           )}
           <h3
             style={{
