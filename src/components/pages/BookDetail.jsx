@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     maxWidth: 150,
+    height: 230,
     borderColor: "#3399FF",
   },
   overview: {
@@ -90,6 +91,12 @@ export default function BookDetail({ history }) {
     firebase.firestore().collection("books").doc(docid).delete();
     history.push("/");
   };
+
+  const url = book.url;
+  const startIndex = url.indexOf("/dp/") + 4;
+  const imgNo = url.substring(startIndex, startIndex + 10);
+
+
   return (
     <div className={classes.root}>
       <Button className={classes.back} onClick={handleBack}>
@@ -97,8 +104,9 @@ export default function BookDetail({ history }) {
       </Button>
       <div className={classes.overview}>
         <img
+          alt="本の画像"
           className={classes.img}
-          src={`${process.env.PUBLIC_URL}/reactimg.jpg`}
+          src={`https://images-na.ssl-images-amazon.com/images/P/${imgNo}.09.LZZZZZZZ`}
           border="4"
           alt="本の画像"
         />
