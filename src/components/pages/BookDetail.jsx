@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import firebase from "../../firebase/firebase";
 import DeleteModal from "../templates/DeleteModal";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../../store/authStore";
 
