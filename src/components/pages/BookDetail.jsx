@@ -6,6 +6,7 @@ import DeleteModal from "../templates/DeleteModal";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../../store/authStore";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -100,6 +101,7 @@ export default function BookDetail({ history }) {
           className={classes.img}
           src={`${process.env.PUBLIC_URL}/reactimg.jpg`}
           border="4"
+          alt="本の画像"
         />
         <div className={classes.description}>
           <h4 className={classes.text}>{book.title}</h4>
@@ -124,7 +126,9 @@ export default function BookDetail({ history }) {
             {book.details}
           </p>
           <div className={classes.more}>
-            <Button className={classes.read}>全文を読む</Button>
+            <Link to={`/book/${book.id}/discription`}>
+              <Button className={classes.read}>全文を読む</Button>
+            </Link>
           </div>
         </div>
         <div className={classes.contents}>
