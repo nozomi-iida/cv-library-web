@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
 export default function EditForm({ history }) {
   const { id } = useParams();
   const books = useSelector((state) => state.books);
-  const book = books.find((b) => b.id === id);
+  const book = books.find((b) => b.documentId === id);
+  const docid = book.documentId;
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
   const [urlerror, setUrlerror] = useState("");
@@ -55,20 +56,12 @@ export default function EditForm({ history }) {
       data.reason = book.reason;
     }
     if (sampleUrl.test(data.url)) {
-      firebase
-        .firestore()
-        .collection("books")
-        .where("id", "==", id)
-        .get()
-        .then((doc) => {
-          const docid = doc.docs[0].id;
-          firebase.firestore().collection("books").doc(docid).update({
-            title: data.title,
-            url: data.url,
-            details: data.details,
-            reason: data.reason,
-          });
-        });
+      firebase.firestore().collection("books").doc(docid).update({
+        title: data.title,
+        url: data.url,
+        details: data.details,
+        reason: data.reason,
+      });
       history.push("/");
     } else {
       setUrlerror("err");

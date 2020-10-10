@@ -32,9 +32,9 @@ export default function Description({ history }) {
   const classes = useStyles();
   const { id } = useParams();
   const books = useSelector((state) => state.books);
-  const book = books.find((b) => b.id === id);
+  const book = books.find((b) => b.documentId === id);
   const handleBack = () => {
-    history.push(`/book/${book.id}`);
+    history.push(`/book/${book.documentId}`);
   };
   return (
     <div className={classes.root}>

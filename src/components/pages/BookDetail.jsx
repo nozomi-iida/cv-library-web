@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
 export default function BookDetail({ history }) {
   const { id } = useParams();
   const books = useSelector((state) => state.books);
-  const book = books.find((b) => b.id === id);
+  const book = books.find((b) => b.documentId === id);
   const docid = book.documentId;
   const user = useContext(AuthContext);
   const classes = useStyles();
@@ -90,7 +90,6 @@ export default function BookDetail({ history }) {
     firebase.firestore().collection("books").doc(docid).delete();
     history.push("/");
   };
-
   return (
     <div className={classes.root}>
       <Button className={classes.back} onClick={handleBack}>
@@ -126,7 +125,7 @@ export default function BookDetail({ history }) {
             {book.details}
           </p>
           <div className={classes.more}>
-            <Link to={`/book/${book.id}/discription`}>
+            <Link to={`/book/${id}/discription`}>
               <Button className={classes.read}>全文を読む</Button>
             </Link>
           </div>
