@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import firebase from "../../firebase/firebase";
-import shortid from "shortid";
 import { AuthContext } from "../../store/authStore";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +43,7 @@ export default function Form({ history }) {
       const now = new Date();
       firebase.firestore().collection("books").add({
         username: user.displayName,
+        userid: user.uid,
         reviews: 0,
         status: "読みたい本",
         impression: "",
@@ -51,7 +51,6 @@ export default function Form({ history }) {
         url: data.url,
         details: data.details,
         reason: data.reason,
-        id: shortid.generate(),
         time: now,
       });
       history.push("/");

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import firebase from "../../firebase/firebase";
 import DeleteModal from "../templates/DeleteModal";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { AuthContext } from "../../store/authStore";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -66,8 +68,9 @@ const useStyles = makeStyles((theme) => ({
 export default function BookDetail({ history }) {
   const { id } = useParams();
   const books = useSelector((state) => state.books);
-  const book = books.find((b) => b.id === id);
+  const book = books.find((b) => b.documentId === id);
   const docid = book.documentId;
+  const user = useContext(AuthContext);
   const classes = useStyles();
   const handleBack = () => {
     history.push("/");
@@ -88,10 +91,11 @@ export default function BookDetail({ history }) {
     firebase.firestore().collection("books").doc(docid).delete();
     history.push("/");
   };
-  const url = book.url;
 
+  const url = book.url;
   const startIndex = url.indexOf("/dp/") + 4;
   const imgNo = url.substring(startIndex, startIndex + 10);
+
 
   return (
     <div className={classes.root}>
@@ -104,6 +108,7 @@ export default function BookDetail({ history }) {
           className={classes.img}
           src={`https://images-na.ssl-images-amazon.com/images/P/${imgNo}.09.LZZZZZZZ`}
           border="4"
+          alt="本の画像"
         />
         <div className={classes.description}>
           <h4 className={classes.text}>{book.title}</h4>
@@ -128,40 +133,46 @@ export default function BookDetail({ history }) {
             {book.details}
           </p>
           <div className={classes.more}>
-            <Button className={classes.read}>全文を読む</Button>
+            <Link to={`/book/${id}/discription`}>
+              <Button className={classes.read}>全文を読む</Button>
+            </Link>
           </div>
         </div>
         <div className={classes.contents}>
           <h3 className={classes.text}>読みたい理由</h3>
           <p className={classes.text + " " + classes.sentence}>{book.reason}</p>
         </div>
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          disableElevation
-          onClick={hensy}
-        >
-          編集する
-        </Button>
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          disableElevation
-          onClick={handleOpen}
-        >
-          削除する
-        </Button>
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          disableElevation
-          onClick={() => history.push(`/book/detail/${id}`)}
-        >
-          読了
-        </Button>
+        {book.userid === user.uid && (
+          <>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              disableElevation
+              onClick={hensy}
+            >
+              編集する
+            </Button>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              disableElevation
+              onClick={handleOpen}
+            >
+              削除する
+            </Button>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              disableElevation
+              onClick={() => history.push(`/book/detail/${id}`)}
+            >
+              読了
+            </Button>
+          </>
+        )}
       </div>
       <DeleteModal open={open} setOpen={setOpen} deleteBook={deleteBook} />
     </div>

@@ -7,7 +7,8 @@ import TextField from "@material-ui/core/TextField";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import firebase from "../../firebase/firebase";
-const ReadForm = ({history}) => {
+import { useSelector } from "react-redux";
+const ReadForm = ({ history }) => {
   const { register, handleSubmit } = useForm();
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,21 +47,16 @@ const ReadForm = ({history}) => {
   const classes = useStyles();
   const { id } = useParams();
   const [rating, setRating] = useState(2.5);
-
+  const books = useSelector((state) => state.books);
+  const book = books.find((b) => b.documentId === id);
+  const docid = book.documentId;
   const onSubmit = (data) => {
-    firebase
-      .firestore()
-      .collection("books")
-      .where("id", "==", id)
-      .get()
-      .then((doc) => {
-        const docid = doc.docs[0].id;
-        firebase.firestore().collection("books").doc(docid).update({
-          status: "読了",
-          impression: data.text,
-          reviews: rating,
-        });
-      });
+    firebase.firestore().collection("books").doc(docid).update({
+      status: "読了",
+      impression: data.text,
+      reviews: rating,
+    });
+    history.push(`/`);
   };
 
   return (

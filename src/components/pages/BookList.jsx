@@ -35,6 +35,13 @@ export default function SimpleList({ history }) {
   const goform = () => {
     history.push("/add");
   };
+  let status = useSelector((state) => state.status);
+
+  if (status === 0) {
+    status = "読みたい本";
+  } else if (status === 1) {
+    status = "読了";
+  }
 
   return (
     <>
@@ -48,7 +55,11 @@ export default function SimpleList({ history }) {
                 return 0;
               })
               .map((book) => {
-                return <BookListItem book={book} key={book.id} />;
+                if (book.status === status) {
+                  return <BookListItem book={book} key={book.id} />;
+                } else if (book.stutus === status) {
+                  return <BookListItem book={book} key={book.id} />;
+                }
               })}
         </List>
         <IconButton
