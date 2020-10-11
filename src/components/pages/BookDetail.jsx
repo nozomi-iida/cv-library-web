@@ -108,7 +108,6 @@ export default function BookDetail({ history }) {
           className={classes.img}
           src={`https://images-na.ssl-images-amazon.com/images/P/${imgNo}.09.LZZZZZZZ`}
           border="4"
-          alt="本の画像"
         />
         <div className={classes.description}>
           <h4 className={classes.text}>{book.title}</h4>

@@ -32,7 +32,7 @@ function App() {
         });
         dispatch(BookAddAction(books));
       });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">

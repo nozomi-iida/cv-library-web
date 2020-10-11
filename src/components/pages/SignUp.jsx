@@ -75,6 +75,7 @@ export default function SignUp() {
             case "auth/email-already-in-use":
               setError("このemailはすでに使用されています");
               break;
+            default:
           }
           // error
         });
