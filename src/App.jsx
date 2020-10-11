@@ -45,16 +45,12 @@ function App() {
               path="/book/bookDitail/edit/:id"
               component={EditForm}
             />
-            {books.length && (
               <Route exact path="/book/:id" component={BookDetail} />
-            )}
-            {books.length && (
               <Route
                 exact
                 path="/book/:id/discription"
                 component={BookDescription}
               />
-            )}
             <LoggedInRoute exact path="/add" component={Form} />
             <Route exact path="/signIn" component={SignIn} />
             <Route exact path="/" component={BookList} />
