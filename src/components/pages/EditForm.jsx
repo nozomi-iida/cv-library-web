@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import firebase from "../../firebase/firebase";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Rating from "@material-ui/lab/Rating";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,12 +32,20 @@ const useStyles = makeStyles((theme) => ({
   font: {
     color: "red",
   },
+  reviews: {
+    display: "flex",
+    marginTop: 10,
+    alignItems: "center",
+    width: "100%",
+    flexDirection: "column",
+  },
 }));
 
 export default function EditForm({ history }) {
   const { id } = useParams();
   const books = useSelector((state) => state.books);
   const book = books.find((b) => b.documentId === id);
+  const [rating, setRating] = useState(book.reviews);
   const docid = book.documentId;
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
@@ -55,19 +64,23 @@ export default function EditForm({ history }) {
     if (!data.reason) {
       data.reason = book.reason;
     }
+    if (!data.impression) {
+      data.impression = book.impression;
+    }
     if (sampleUrl.test(data.url)) {
       firebase.firestore().collection("books").doc(docid).update({
         title: data.title,
         url: data.url,
         details: data.details,
         reason: data.reason,
+        reviews: rating,
+        impression: data.impression,
       });
-      history.push("/");
+      history.push(`/book/${id}`);
     } else {
       setUrlerror("err");
     }
   };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -166,7 +179,34 @@ export default function EditForm({ history }) {
             placeholder={book.reason}
             inputRef={register}
           />
-
+          {book.status==="読了" && (
+            <>
+              <div className={classes.reviews} >
+                <Rating
+                name="reviews"
+                size="large"
+                defaultValue={book.reviews}
+                precision={0.5}
+                style={{ fontSize: 40 }}
+                onChange={(e) => {
+                  setRating(e.target.value);
+                }}
+                />
+              </div>
+              <h3 className={classes.ryou}>感想*</h3>
+              <TextField
+                name="impression"
+                fullWidth
+                className={classes.text}
+                id="outlined-multiline-static"
+                multiline
+                rows={8}
+                variant="outlined"
+                placeholder={book.impression}
+                inputRef={register}
+              />
+            </>
+          )}
           <Button
             type="submit"
             fullWidth
