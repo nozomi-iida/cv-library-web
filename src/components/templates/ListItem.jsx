@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BookListItem = ({ book }) => {
+const BookListItem = ({ book}) => {
   const classes = useStyles();
 
   const reviews = book.reviews;
