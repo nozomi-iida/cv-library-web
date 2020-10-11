@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(1),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -39,6 +39,9 @@ export default function EditForm({ history }) {
   const book = books.find((b) => b.documentId === id);
   const docid = book.documentId;
   const classes = useStyles();
+  const handleBack=()=>{
+    history.push("/")
+  }
   const { register, handleSubmit } = useForm();
   const [urlerror, setUrlerror] = useState("");
   const sampleUrl = new RegExp("^https://www.amazon.co.jp/.");
@@ -77,6 +80,9 @@ export default function EditForm({ history }) {
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
+      <Button className={classes.back} onClick={handleBack}>
+        ←戻る
+      </Button>
           <h3
             style={{
               width: "100%",

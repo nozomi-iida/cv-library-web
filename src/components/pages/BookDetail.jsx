@@ -70,7 +70,7 @@ export default function BookDetail({ history }) {
   const books = useSelector((state) => state.books);
   const book = books.find((b) => b.documentId === id);
   const docid = book.documentId;
-  const user = useContext(AuthContext);
+  let user = useContext(AuthContext);
   const classes = useStyles();
   const handleBack = () => {
     history.push("/");
@@ -95,8 +95,12 @@ export default function BookDetail({ history }) {
   const url = book.url;
   const startIndex = url.indexOf("/dp/") + 4;
   const imgNo = url.substring(startIndex, startIndex + 10);
-
-
+  const openurl = () => {
+    window.open(book.url);
+  };
+  if (!user) {
+    user = { uid: 0 };
+  }
   return (
     <div className={classes.root}>
       <Button className={classes.back} onClick={handleBack}>
@@ -124,6 +128,7 @@ export default function BookDetail({ history }) {
           variant="contained"
           color="primary"
           disableElevation
+          onClick={openurl}
         >
           本を購入する
         </Button>
