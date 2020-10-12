@@ -60,6 +60,7 @@ export default function SignIn({ history }) {
           case "auth/wrong-password":
             setError("パスワードが違います");
             break;
+          default:
         }
         console.log(err.code);
       });
