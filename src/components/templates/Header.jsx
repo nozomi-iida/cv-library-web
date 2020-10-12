@@ -107,7 +107,7 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           {["left"].map((anchor) => (
             <React.Fragment key={anchor}>

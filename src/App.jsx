@@ -11,13 +11,13 @@ import BookDescription from "./components/pages/BookDescription";
 import EditForm from "./components/pages/EditForm";
 import { AuthProvider } from "./store/authStore";
 import LoggedInRoute from "./router/LoggedInRouter";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import firebase from "./firebase/firebase";
 import { BookAddAction } from "./reducks/books/actions";
 import ReadForm from "./components/pages/ReadForm";
 
 function App() {
-  const books = useSelector((state) => state.books);
+  const books =useSelector((state)=>state.books)
   const dispatch = useDispatch();
   useEffect(() => {
     firebase
@@ -32,35 +32,38 @@ function App() {
         });
         dispatch(BookAddAction(books));
       });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">
       <AuthProvider>
         <Router>
           <Header />
-          <Switch>
-            <Route
-              exact
-              path="/book/bookDitail/edit/:id"
-              component={EditForm}
-            />
-            {books.length && (
-              <Route exact path="/book/:id" component={BookDetail} />
-            )}
-            {books.length && (
+          <div style={{paddingTop: 64}}>
+            <Switch>
               <Route
+                exact
+                path="/book/bookDitail/edit/:id"
+                component={EditForm}
+              />
+              {books.length&&(
+                <Route exact path="/book/:id" component={BookDetail} />
+                )}
+                {books.length&&(
+                <Route
                 exact
                 path="/book/:id/discription"
                 component={BookDescription}
-              />
-            )}
-            <LoggedInRoute exact path="/add" component={Form} />
-            <Route exact path="/signIn" component={SignIn} />
-            <Route exact path="/" component={BookList} />
-            <Route exact path="/signUp" component={SignUp} />
-            <Route exact path="/book/detail/:id" component={ReadForm} />
-          </Switch>
+                />
+                )}
+                
+              <LoggedInRoute exact path="/add" component={Form} />
+              <Route exact path="/signIn" component={SignIn} />
+              <Route exact path="/" component={BookList} />
+              <Route exact path="/signUp" component={SignUp} />
+              <Route exact path="/book/detail/:id" component={ReadForm} />
+            </Switch>
+          </div>
           <Footer />
         </Router>
       </AuthProvider>
