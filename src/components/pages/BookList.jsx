@@ -47,8 +47,8 @@ export default function SimpleList({ history }) {
     <>
       <div className={classes.root}>
         <List component="nav">
-          {/* {books !== undefined && */}
-            {books
+          {books !== undefined &&
+            books
               .sort(function (a, b) {
                 if (a.time < b.time) return 1;
                 if (a.time > b.time) return -1;
