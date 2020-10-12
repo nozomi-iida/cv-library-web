@@ -37,8 +37,9 @@ export default function IconModal({ setImage, image, addFile }) {
   };
 
   const handleDrop = (dropped) => {
-    setImage(dropped[0]);
-    var newfile = new File([dropped[0]], "./myfile.jpg");
+    const imageUrl = [window.URL.createObjectURL(dropped)]
+    setImage(imageUrl[0]);
+    var newfile = new File([dropped], "image/jpeg'");
     addFile(newfile);
   };
 
