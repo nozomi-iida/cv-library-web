@@ -146,6 +146,12 @@ export default function BookDetail({ history }) {
           <h3 className={classes.text}>読みたい理由</h3>
           <p className={classes.text + " " + classes.sentence}>{book.reason}</p>
         </div>
+        {book.status === '読了' && (
+          <div className={classes.contents}>
+            <h3 className={classes.text}>感想</h3>
+            <p className={classes.text + " " + classes.sentence}>{book.impression}</p>
+          </div>
+        )}
         {book.userid === user.uid && (
           <>
             <Button

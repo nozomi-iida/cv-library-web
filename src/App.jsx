@@ -39,29 +39,31 @@ function App() {
       <AuthProvider>
         <Router>
           <Header />
-          <Switch>
-            <Route
-              exact
-              path="/book/bookDitail/edit/:id"
-              component={EditForm}
-            />
-            {books.length&&(
-              <Route exact path="/book/:id" component={BookDetail} />
-              )}
-              {books.length&&(
+          <div style={{paddingTop: 64}}>
+            <Switch>
               <Route
-              exact
-              path="/book/:id/discription"
-              component={BookDescription}
+                exact
+                path="/book/bookDitail/edit/:id"
+                component={EditForm}
               />
-              )}
-              
-            <LoggedInRoute exact path="/add" component={Form} />
-            <Route exact path="/signIn" component={SignIn} />
-            <Route exact path="/" component={BookList} />
-            <Route exact path="/signUp" component={SignUp} />
-            <Route exact path="/book/detail/:id" component={ReadForm} />
-          </Switch>
+              {books.length&&(
+                <Route exact path="/book/:id" component={BookDetail} />
+                )}
+                {books.length&&(
+                <Route
+                exact
+                path="/book/:id/discription"
+                component={BookDescription}
+                />
+                )}
+                
+              <LoggedInRoute exact path="/add" component={Form} />
+              <Route exact path="/signIn" component={SignIn} />
+              <Route exact path="/" component={BookList} />
+              <Route exact path="/signUp" component={SignUp} />
+              <Route exact path="/book/detail/:id" component={ReadForm} />
+            </Switch>
+          </div>
           <Footer />
         </Router>
       </AuthProvider>

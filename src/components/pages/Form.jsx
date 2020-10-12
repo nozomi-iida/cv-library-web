@@ -41,7 +41,64 @@ export default function Form({ history }) {
     history.push("/");
   };
   const sampleUrl = new RegExp("^https://www.amazon.co.jp/.");
+  const addUrlParam = function(path, key, value, save) {
+    if (!path || !key || !value) return '';
+ 
+    var addParam      = key + '=' + value,
+        paths         = path.split('/'),
+        fullFileName  = paths.pop(),
+        fileName      = fullFileName.replace(/[#].+$/g, ''),
+        dirName       = path.replace(fullFileName, ''),
+        hashMatches   = fullFileName.match(/#([^#]+)$/),
+        paramMatches  = fullFileName.match(/([^]+)$/),
+        hash          = '',
+        param         = '',
+        params        = [],
+        fullPath      = '',
+        hitParamIndex = -1;
+ 
+    if (hashMatches && hashMatches[1]) {
+        hash = hashMatches[1];
+    }
+ 
+    if (paramMatches && paramMatches[1]) {
+        param = paramMatches[1].replace(/#[^#]+$/g, '').replace('&', '&');
+    }
+ 
+    fullPath = dirName + fileName;
+ 
+    if (param === '') {
+        param = addParam;
+    } else if (save) {
+        params = param.split('&');
+ 
+        for (var i = 0, len = params.length; i < len; i++) {
+            if (params[i].match(new RegExp('^' + key + '='))) {
+                hitParamIndex = i;
+                break;
+            }
+        }
+ 
+        if (hitParamIndex > -1) {
+            params[hitParamIndex] = addParam;
+            param = params.join('&');
+        } else {
+            param += '&' + addParam;
+        }
+    } else {
+        param += '&' + addParam;
+    }
+ 
+    fullPath += '?' + param;
+ 
+    if (hash !== '') fullPath += '#' + hash;
+ 
+    return fullPath;
+};
   const onSubmit = (data) => {
+    if(data.url.includes('amazon')){
+      data.url = addUrlParam(data.url,'tag','yasumeltid-22',true);
+    }
     if (sampleUrl.test(data.url)) {
       const now = new Date();
       firebase.firestore().collection("books").add({
