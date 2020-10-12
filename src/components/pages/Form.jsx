@@ -10,7 +10,7 @@ import { AuthContext } from "../../store/authStore";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(1),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -37,6 +37,9 @@ export default function Form({ history }) {
   const { register, handleSubmit, errors } = useForm();
   const [urlerror, setUrlerror] = useState("");
   const user = useContext(AuthContext);
+  const handleBack = () => {
+    history.push("/");
+  };
   const sampleUrl = new RegExp("^https://www.amazon.co.jp/.");
   const onSubmit = (data) => {
     if (sampleUrl.test(data.url)) {
@@ -68,6 +71,9 @@ export default function Form({ history }) {
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
+          <Button className={classes.back} onClick={handleBack}>
+            ←戻る
+          </Button>
           <h3
             style={{
               width: "100%",

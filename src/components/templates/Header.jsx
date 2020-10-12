@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,6 +12,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import firebase from "../../firebase/firebase";
+import { AuthContext } from "../../store/authStore";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
+  const user = useContext(AuthContext);
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false,
@@ -66,22 +69,37 @@ export default function ButtonAppBar() {
     >
       <List>
         <ListItem>
-          <Avatar style={{ marginRight: 10 }} />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              textAlign: "center",
-            }}
-          >
-            <ListItemText primary="nishikawa" />
-            <ListItemText primary="aaaa@gmail.com" />
-          </div>
+          {user && (
+            <>
+              <Avatar src={user.photoURL} style={{ marginRight: 10 }} />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  textAlign: "center",
+                }}
+              >
+                <ListItemText primary={`${user.displayName}`} />
+                <ListItemText primary={`${user.email}`} />
+              </div>
+            </>
+          )}
         </ListItem>
         <ListItem style={{ height: 40, backgroundColor: "#3f51b5" }}>
-          <IconButton style={{ color: "#fff", width: "100%" }} onClick={logout}>
-            ログアウト
-          </IconButton>
+          {user ? (
+            <IconButton
+              style={{ color: "#fff", width: "100%" }}
+              onClick={logout}
+            >
+              ログアウト
+            </IconButton>
+          ) : (
+            <Link to="/signIn" style={{ textDecoration: "none" }}>
+              <IconButton style={{ color: "#fff", width: "100%" }}>
+                ログイン
+              </IconButton>
+            </Link>
+          )}
         </ListItem>
       </List>
     </div>

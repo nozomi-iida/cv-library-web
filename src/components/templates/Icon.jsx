@@ -15,15 +15,15 @@ const useStyles = makeStyles((theme) => ({
 const Icon = ({ image, handleDrop, addImage, handleClose, addFile }) => {
   const classes = useStyles();
   const [editor, setImg] = useState(null);
-  const Change = (file) => {
-    addImage(file);
-    addFile(file);
+  const Change = (e) => {
+    addImage(e.target.files[0]);
+    addFile(e.target.files[0]);
   };
-  const aaa = () => {
+  const onClick = () => {
     const canvas = editor.getImage().toDataURL();
     fetch(canvas)
       .then((res) => res.blob())
-      .then((blob) => handleDrop([window.URL.createObjectURL(blob)]));
+      .then((blob) => handleDrop(blob));
     handleClose();
   };
 
@@ -58,7 +58,7 @@ const Icon = ({ image, handleDrop, addImage, handleClose, addFile }) => {
           id="contained-button-file"
           multiple
           type="file"
-          onChange={(e) => Change(e.target.files[0])}
+          onChange={Change}
         />
         <label
           style={{ justifyContent: "center", display: "flex" }}
@@ -71,7 +71,7 @@ const Icon = ({ image, handleDrop, addImage, handleClose, addFile }) => {
             style={{ marginLeft: 15 }}
             color="primary"
             variant="contained"
-            onClick={aaa}
+            onClick={onClick}
           >
             決定
           </Button>

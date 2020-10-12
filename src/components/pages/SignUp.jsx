@@ -86,17 +86,17 @@ export default function SignUp() {
           fireStorage
             .ref()
             .child(user.uid)
-            .put(file)
+            .put(file, { contentType: 'image/jpeg' })
             .then((snapshot) => {
-              snapshot.ref.getDownloadURL();
-            })
-            .then((downloadURL) => {
-              user.updateProfile({
-                displayName: data.Name,
-                photoURL: downloadURL,
+              snapshot.ref.getDownloadURL().then((downloadURL) => {
+                user.updateProfile({
+                  displayName: data.Name,
+                  photoURL: downloadURL,
+                });
+                history.push("/");
               });
-              history.push("/");
             })
+            
             .catch((er) => {
               console.log(er);
               // error
