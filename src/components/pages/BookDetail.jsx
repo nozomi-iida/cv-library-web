@@ -6,6 +6,7 @@ import DeleteModal from "../templates/DeleteModal";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../../store/authStore";
+import NoImage from "../../NoImage/noimage.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   img: {
     maxWidth: 150,
     height: 230,
-    borderColor: "#3399FF",
+    border: "none",
   },
   overview: {
     display: "flex",
@@ -94,7 +95,18 @@ export default function BookDetail({ history }) {
 
   const url = book.url;
   const startIndex = url.indexOf("/dp/") + 4;
+  const startIndex2 = url.indexOf("/product/") + 9;
   const imgNo = url.substring(startIndex, startIndex + 10);
+  const imgNo2 = url.substring(startIndex2, startIndex2 + 10);
+  let src = "../../../public/noimage.png";
+  const imgreg = new RegExp("[A-Z0-9]{10}");
+  if (imgNo.match(imgreg) !== null) {
+    src = `https://images-na.ssl-images-amazon.com/images/P/${imgNo}.09.LZZZZZZZ`;
+  } else if (imgNo2.match(imgreg) !== null) {
+    src = `https://images-na.ssl-images-amazon.com/images/P/${imgNo2}.09.LZZZZZZZ`;
+  } else {
+    src = NoImage;
+  }
   const openurl = () => {
     window.open(book.url);
   };
@@ -107,12 +119,7 @@ export default function BookDetail({ history }) {
         ←戻る
       </Button>
       <div className={classes.overview}>
-        <img
-          alt="本の画像"
-          className={classes.img}
-          src={`https://images-na.ssl-images-amazon.com/images/P/${imgNo}.09.LZZZZZZZ`}
-          border="4"
-        />
+        <img alt="本の画像" className={classes.img} src={src} />
         <div className={classes.description}>
           <h4 className={classes.text}>{book.title}</h4>
           <div className={classes.info}>
@@ -146,10 +153,12 @@ export default function BookDetail({ history }) {
           <h3 className={classes.text}>読みたい理由</h3>
           <p className={classes.text + " " + classes.sentence}>{book.reason}</p>
         </div>
-        {book.status === '読了' && (
+        {book.status === "読了" && (
           <div className={classes.contents}>
             <h3 className={classes.text}>感想</h3>
-            <p className={classes.text + " " + classes.sentence}>{book.impression}</p>
+            <p className={classes.text + " " + classes.sentence}>
+              {book.impression}
+            </p>
           </div>
         )}
         {book.userid === user.uid && (
