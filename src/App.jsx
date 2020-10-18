@@ -41,11 +41,13 @@ function App() {
           <Header />
           <div style={{paddingTop: 64}}>
             <Switch>
-              <Route
-                exact
-                path="/book/bookDitail/edit/:id"
-                component={EditForm}
-              />
+              {books.length&&(
+                <Route
+                  exact
+                  path="/book/bookDitail/edit/:id"
+                  component={EditForm}
+                />
+              )}
               {books.length&&(
                 <Route exact path="/book/:id" component={BookDetail} />
                 )}

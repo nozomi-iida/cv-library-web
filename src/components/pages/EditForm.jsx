@@ -114,7 +114,7 @@ export default function EditForm({ history }) {
             name="title"
             autoComplete="title"
             autoFocus
-            placeholder={book.title}
+            defaultValue={book.title}
             inputRef={register}
           />
           <h3
@@ -134,7 +134,7 @@ export default function EditForm({ history }) {
             name="url"
             type="url"
             id="url"
-            placeholder={book.url}
+            defaultValue={book.url}
             inputRef={register}
           />
           {urlerror && (
@@ -159,7 +159,7 @@ export default function EditForm({ history }) {
             name="details"
             type="details"
             id="details"
-            placeholder={book.details}
+            defaultValue={book.details}
             inputRef={register}
           />
 
@@ -182,7 +182,7 @@ export default function EditForm({ history }) {
             name="reason"
             type="reason"
             id="reason"
-            placeholder={book.reason}
+            defaultValue={book.reason}
             inputRef={register}
           />
           {book.status==="読了" && (
@@ -208,7 +208,7 @@ export default function EditForm({ history }) {
                 multiline
                 rows={8}
                 variant="outlined"
-                placeholder={book.impression}
+                defaultValue={book.impression}
                 inputRef={register}
               />
             </>
