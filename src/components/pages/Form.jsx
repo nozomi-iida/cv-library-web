@@ -112,6 +112,20 @@ export default function Form({ history }) {
         details: data.details,
         reason: data.reason,
         time: now,
+      }).then(() => {
+        const payload = {
+          text: 
+          `
+            お問い合わせがありました。\nお名前: ${user.displayName} \nタイトル: ${data.title} \n概要: ${data.details} \n理由: ${data.reason} \nurl: ${data.url} \n
+          `
+        }
+        const url = 'https://hooks.slack.com/services/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';
+        fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        }).then(() => {
+          alert("お問い合わせの送信が完了致しました。");
+        });
       });
       history.push("/");
     } else {

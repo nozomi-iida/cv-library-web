@@ -56,7 +56,7 @@ export default function SimpleList({ history }) {
               })
               .map((book) => {
                 if (book.status === status) {
-                  return <BookListItem book={book} key={book.title} />;
+                  return <BookListItem book={book} key={book.documentId} />;
                 } else {
                   return null
                 }
