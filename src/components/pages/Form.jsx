@@ -37,6 +37,8 @@ export default function Form({ history }) {
   const { register, handleSubmit, errors } = useForm();
   const [urlerror, setUrlerror] = useState("");
   const user = useContext(AuthContext);
+  const url = process.env.REACT_APP_HOOK_URL;
+  console.log(url);
   const handleBack = () => {
     history.push("/");
   };
@@ -119,7 +121,6 @@ export default function Form({ history }) {
             お問い合わせがありました。\nお名前: ${user.displayName} \nタイトル: ${data.title} \n概要: ${data.details} \n理由: ${data.reason} \nurl: ${data.url} \n
           `
         }
-        const url = 'https://hooks.slack.com/services/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';
         fetch(url, {
           method: 'POST',
           body: JSON.stringify(payload)
