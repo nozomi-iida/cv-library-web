@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -35,75 +35,76 @@ const useStyles = makeStyles((theme) => ({
 export default function Form({ history }) {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  const [urlerror, setUrlerror] = useState("");
   const user = useContext(AuthContext);
   const url = process.env.REACT_APP_HOOK_URL;
   console.log(url);
   const handleBack = () => {
     history.push("/");
   };
-  const sampleUrl = new RegExp("^https://www.amazon.co.jp/.");
-  const addUrlParam = function(path, key, value, save) {
-    if (!path || !key || !value) return '';
- 
-    var addParam      = key + '=' + value,
-        paths         = path.split('/'),
-        fullFileName  = paths.pop(),
-        fileName      = fullFileName.replace(/[#].+$/g, ''),
-        dirName       = path.replace(fullFileName, ''),
-        hashMatches   = fullFileName.match(/#([^#]+)$/),
-        paramMatches  = fullFileName.match(/([^]+)$/),
-        hash          = '',
-        param         = '',
-        params        = [],
-        fullPath      = '',
-        hitParamIndex = -1;
- 
+  const sampleUrl = new RegExp("^https?://.");
+  const addUrlParam = function (path, key, value, save) {
+    if (!path || !key || !value) return "";
+
+    var addParam = key + "=" + value,
+      paths = path.split("/"),
+      fullFileName = paths.pop(),
+      fileName = fullFileName.replace(/[#].+$/g, ""),
+      dirName = path.replace(fullFileName, ""),
+      hashMatches = fullFileName.match(/#([^#]+)$/),
+      paramMatches = fullFileName.match(/([^]+)$/),
+      hash = "",
+      param = "",
+      params = [],
+      fullPath = "",
+      hitParamIndex = -1;
+
     if (hashMatches && hashMatches[1]) {
-        hash = hashMatches[1];
+      hash = hashMatches[1];
     }
- 
+
     if (paramMatches && paramMatches[1]) {
-        param = paramMatches[1].replace(/#[^#]+$/g, '').replace('&', '&');
+      param = paramMatches[1].replace(/#[^#]+$/g, "").replace("&", "&");
     }
- 
+
     fullPath = dirName + fileName;
- 
-    if (param === '') {
-        param = addParam;
+
+    if (param === "") {
+      param = addParam;
     } else if (save) {
-        params = param.split('&');
- 
-        for (var i = 0, len = params.length; i < len; i++) {
-            if (params[i].match(new RegExp('^' + key + '='))) {
-                hitParamIndex = i;
-                break;
-            }
+      params = param.split("&");
+
+      for (var i = 0, len = params.length; i < len; i++) {
+        if (params[i].match(new RegExp("^" + key + "="))) {
+          hitParamIndex = i;
+          break;
         }
- 
-        if (hitParamIndex > -1) {
-            params[hitParamIndex] = addParam;
-            param = params.join('&');
-        } else {
-            param += '&' + addParam;
-        }
+      }
+
+      if (hitParamIndex > -1) {
+        params[hitParamIndex] = addParam;
+        param = params.join("&");
+      } else {
+        param += "&" + addParam;
+      }
     } else {
-        param += '&' + addParam;
+      param += "&" + addParam;
     }
- 
-    fullPath += '?' + param;
- 
-    if (hash !== '') fullPath += '#' + hash;
- 
+
+    fullPath += "?" + param;
+
+    if (hash !== "") fullPath += "#" + hash;
+
     return fullPath;
-};
+  };
   const onSubmit = (data) => {
-    if(data.url.includes('amazon')){
-      data.url = addUrlParam(data.url,'tag','yasumeltid-22',true);
+    if (data.url.includes("amazon")) {
+      data.url = addUrlParam(data.url, "tag", "yasumeltid-22", true);
     }
-    if (sampleUrl.test(data.url)) {
-      const now = new Date();
-      firebase.firestore().collection("books").add({
+    const now = new Date();
+    firebase
+      .firestore()
+      .collection("books")
+      .add({
         username: user.displayName,
         userid: user.uid,
         reviews: 0,
@@ -114,24 +115,21 @@ export default function Form({ history }) {
         details: data.details,
         reason: data.reason,
         time: now,
-      }).then(() => {
+      })
+      .then(() => {
         const payload = {
-          text: 
-          `
+          text: `
             お問い合わせがありました。\nお名前: ${user.displayName} \nタイトル: ${data.title} \n概要: ${data.details} \n理由: ${data.reason} \nurl: ${data.url} \n
-          `
-        }
+          `,
+        };
         fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(payload)
+          method: "POST",
+          body: JSON.stringify(payload),
         }).then(() => {
           alert("お問い合わせの送信が完了致しました。");
         });
       });
-      history.push("/");
-    } else {
-      setUrlerror("err");
-    }
+    history.push("/");
   };
 
   return (
@@ -187,14 +185,18 @@ export default function Form({ history }) {
             name="url"
             type="url"
             id="url"
-            inputRef={register({ required: true })}
+            inputRef={register({
+              required: "本のURLを入力してください",
+              pattern: {
+                value: sampleUrl,
+                message: "URLが間違っています",
+              },
+            })}
           />
           {errors.url && (
-            <span className={classes.font}>AmaszonのURLを入力してください</span>
+            <span className={classes.font}>{errors.url.message}</span>
           )}
-          {urlerror && (
-            <span className={classes.font}>URLが間違っています</span>
-          )}
+
           <h3
             style={{
               width: "100%",
