@@ -48,12 +48,11 @@ export default function EditForm({ history }) {
   const [rating, setRating] = useState(book.reviews);
   const docid = book.documentId;
   const classes = useStyles();
-  const handleBack=()=>{
-    history.push("/")
-  }
-  const { register, handleSubmit } = useForm();
-  const [urlerror, setUrlerror] = useState("");
-  const sampleUrl = new RegExp("^https://www.amazon.co.jp/.");
+  const handleBack = () => {
+    history.push("/");
+  };
+  const { register, handleSubmit, errors } = useForm();
+  const sampleUrl = new RegExp("^^https?://.");
   const onSubmit = (data) => {
     if (!data.title) {
       data.title = book.title;
@@ -80,8 +79,6 @@ export default function EditForm({ history }) {
         impression: data.impression,
       });
       history.push(`/book/${id}`);
-    } else {
-      setUrlerror("err");
     }
   };
   return (
@@ -93,9 +90,9 @@ export default function EditForm({ history }) {
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
-      <Button className={classes.back} onClick={handleBack}>
-        ←戻る
-      </Button>
+          <Button className={classes.back} onClick={handleBack}>
+            ←戻る
+          </Button>
           <h3
             style={{
               width: "100%",
@@ -135,10 +132,16 @@ export default function EditForm({ history }) {
             type="url"
             id="url"
             defaultValue={book.url}
-            inputRef={register}
+            inputRef={register({
+              required: "本のURLを入力してください",
+              pattern: {
+                value: sampleUrl,
+                message: "URLが間違っています",
+              },
+            })}
           />
-          {urlerror && (
-            <span className={classes.font}>URLが間違っています</span>
+          {errors.url && (
+            <span className={classes.font}>{errors.url.message}</span>
           )}
           <h3
             style={{
@@ -185,18 +188,18 @@ export default function EditForm({ history }) {
             defaultValue={book.reason}
             inputRef={register}
           />
-          {book.status==="読了" && (
+          {book.status === "読了" && (
             <>
-              <div className={classes.reviews} >
+              <div className={classes.reviews}>
                 <Rating
-                name="reviews"
-                size="large"
-                defaultValue={book.reviews}
-                precision={0.5}
-                style={{ fontSize: 40 }}
-                onChange={(e) => {
-                  setRating(e.target.value);
-                }}
+                  name="reviews"
+                  size="large"
+                  defaultValue={book.reviews}
+                  precision={0.5}
+                  style={{ fontSize: 40 }}
+                  onChange={(e) => {
+                    setRating(e.target.value);
+                  }}
                 />
               </div>
               <h3 className={classes.ryou}>感想*</h3>
