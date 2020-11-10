@@ -44,9 +44,13 @@ export default function TransitionsModal() {
       switch(err.code){
         case "auth/invalid-email":
           set_err("正しいメールアドレスを入力してください")
+          break
         case "auth/user-not-found":
           set_err("ユーザーが見つかりません、登録しているメールアドレスを入力してください")
-      }
+          break
+        default:
+          break
+        }
     };
   }
 
