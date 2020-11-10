@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import firebase from "../../firebase/firebase";
 import { AuthContext } from "../../store/authStore";
 import { Redirect } from "react-router-dom";
+import ForgotPassModal from "../templates/ForgotPassModal"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -128,7 +129,7 @@ export default function SignIn({ history }) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Button color="primary">Forgot password?</Button>
+              <ForgotPassModal/>
             </Grid>
             <Grid item>
               <Button color="primary" onClick={() => history.push("/signUp")}>
